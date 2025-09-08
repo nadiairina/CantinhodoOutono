@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const stripe = require("stripe")(functions.config().stripe.secret);
-
+// Forçar deploy
 exports.createPaymentIntent = functions.https.onRequest(async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).send("Method Not Allowed");
