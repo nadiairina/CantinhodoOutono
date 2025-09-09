@@ -45,7 +45,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="text-3xl font-bold text-[#8B4513]">Mermaid</a>
@@ -62,11 +61,9 @@
         <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
             <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Checkout</h1>
             <div class="lg:grid lg:grid-cols-2 lg:gap-12">
-                <!-- Seção de Itens do Carrinho -->
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Seu Pedido</h2>
                     <div id="cart-items" class="space-y-4">
-                        <!-- Itens do carrinho serão inseridos aqui pelo JavaScript -->
                         <p class="text-gray-500 text-center">Seu carrinho está vazio.</p>
                     </div>
                     <div class="border-t border-gray-200 mt-6 pt-4">
@@ -77,7 +74,6 @@
                     </div>
                 </div>
 
-                <!-- Formulário de Checkout -->
                 <div class="mt-10 lg:mt-0">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados de Entrega e Pagamento</h2>
                     <form id="checkout-form">
@@ -98,8 +94,7 @@
                         <div class="mt-6">
                             <label for="payment-card" class="block text-sm font-medium text-gray-700">Dados do Cartão</label>
                             <div id="card-element" class="mt-1">
-                                <!-- Elemento de cartão do Stripe será inserido aqui -->
-                            </div>
+                                </div>
                             <div id="card-errors" role="alert" class="stripe-errors"></div>
                         </div>
                         <div class="mt-8 text-center">
@@ -119,186 +114,79 @@
         </div>
     </footer>
 
-    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
-            <p id="message-text" class="text-lg font-semibold mb-4"></p>
-            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
-        </div>
-    </div>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
+    <script type="module" src="script.js"></script>
+    <script>
+        let cartItemsContainer, cartTotalElement;
+        const stripePublicKey = 'pk_test_51O2f1hL2f2p3U1P1k4v3w5x6y7z8a9b0c1d2e3f4g5h6i7j8k9l0m1n2o3p4q5r';
+        const stripe = Stripe(stripePublicKey);
+        const cartItemCountElement = document.getElementById('cart-item-count');
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        document.addEventListener('DOMContentLoaded', () => {
+            cartItemsContainer = document.getElementById('cart-items');
+            cartTotalElement = document.getElementById('cart-total');
 
-        let db, auth, userId, cart = [];
-        let stripe, elements;
+            // Carregar o carrinho quando a página é carregada
+            loadCart();
+        });
 
-        // Elementos do DOM
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalElement = document.getElementById('cart-total');
+        // Simula o carregamento do carrinho (deve ser ajustado para a sua lógica de back-end)
+        function loadCart() {
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+            // Exemplo de dados de um item do carrinho
+            const exampleItem = {
+                name: "Caneca de Cerâmica",
+                price: 19.99,
+                quantity: 1
+            };
+            total += exampleItem.price * exampleItem.quantity;
+
+            const itemHTML = `
+                <div class="flex items-center justify-between border-b pb-4">
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/80x80/D2B48C/ffffff?text=Item" alt="${exampleItem.name}" class="rounded-lg w-20 h-20 object-cover mr-4">
+                        <div>
+                            <h3 class="font-semibold">${exampleItem.name}</h3>
+                            <p class="text-sm text-gray-500">Quantidade: ${exampleItem.quantity}</p>
+                        </div>
+                    </div>
+                    <span class="font-bold text-[#8B4513]">€${(exampleItem.price * exampleItem.quantity).toFixed(2)}</span>
+                </div>
+            `;
+            cartItemsContainer.innerHTML = itemHTML;
+            cartTotalElement.textContent = `€${total.toFixed(2)}`;
+        }
+
+        // Simula o Stripe e o pagamento
         const checkoutForm = document.getElementById('checkout-form');
-        const cardErrors = document.getElementById('card-errors');
         const checkoutButton = document.getElementById('checkout-button');
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
+        const cardErrors = document.getElementById('card-errors');
+        const cardElement = document.getElementById('card-element');
 
-        function showMessageBox(message) {
-            messageText.textContent = message;
-            messageBox.classList.remove('hidden');
-        }
+        if (checkoutForm && checkoutButton) {
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                checkoutButton.disabled = true;
+                checkoutButton.textContent = 'A processar...';
 
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Utilizador autenticado com ID:", userId);
-                        listenToCart();
+                // Simulação de chamada para o back-end
+                setTimeout(() => {
+                    const paymentSuccessful = true;
+                    if (paymentSuccessful) {
+                        cardErrors.textContent = '';
+                        alert('Pagamento efetuado com sucesso! O seu pedido será processado em breve. Obrigado pela sua compra!');
+                        checkoutForm.reset();
+                        // Limpar o carrinho (simulação)
+                        cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center">Seu carrinho está vazio.</p>`;
+                        cartTotalElement.textContent = '€0,00';
                     } else {
-                        userId = null;
-                        console.log("Usuário não autenticado.");
+                        cardErrors.textContent = "Ocorreu um erro no pagamento. Por favor, tente novamente.";
                     }
-                });
-            } catch (error) {
-                console.error("Erro ao configurar o Firebase:", error);
-            }
-        }
-
-        // Ouve as mudanças no carrinho em tempo real
-        function listenToCart() {
-            if (!userId) {
-                console.error("Não há userId. Não é possível ouvir o carrinho.");
-                return;
-            }
-
-            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
-            onSnapshot(userCartRef, (snapshot) => {
-                cart = [];
-                let total = 0;
-                cartItemsContainer.innerHTML = '';
-                if (snapshot.empty) {
-                    cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center">Seu carrinho está vazio.</p>';
-                } else {
-                    snapshot.forEach(doc => {
-                        const product = { id: doc.id, ...doc.data() };
-                        cart.push(product);
-                        const productTotal = product.price * product.quantity;
-                        total += productTotal;
-
-                        const productElement = document.createElement('div');
-                        productElement.className = 'flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-sm';
-                        productElement.innerHTML = `
-                            <div class="flex items-center">
-                                <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-lg mr-4">
-                                <div>
-                                    <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
-                                    <p class="text-sm text-gray-500">Quantidade: ${product.quantity}</p>
-                                </div>
-                            </div>
-                            <span class="text-lg font-bold text-gray-800">€${productTotal.toFixed(2)}</span>
-                        `;
-                        cartItemsContainer.appendChild(productElement);
-                    });
-                }
-                cartTotalElement.textContent = `€${total.toFixed(2)}`;
-            }, (error) => {
-                console.error("Erro ao ouvir o carrinho:", error);
+                    checkoutButton.disabled = false;
+                    checkoutButton.textContent = 'Pagar e Finalizar';
+                }, 2000); // Simula um atraso de 2 segundos
             });
         }
-
-        async function initStripe() {
-            try {
-                const stripeKey = 'pk_test_51PZ8tY2Mi5c7xNRYF9l5Y9l4zD4Ua7Z4l2vVb0D1Zp9Z0hQ8D4c3tG4dG5qH1I0t4kP4B9y3F2gK8fE5gH6';
-                stripe = Stripe(stripeKey);
-                elements = stripe.elements();
-
-                const cardElement = elements.create('card');
-                cardElement.mount('#card-element');
-
-                cardElement.on('change', (event) => {
-                    cardErrors.textContent = event.error ? event.error.message : '';
-                    checkoutButton.disabled = event.empty || event.error;
-                });
-
-                const functions = getFunctions(initializeApp(firebaseConfig));
-                const createPaymentIntent = httpsCallable(functions, 'createPaymentIntent');
-
-                checkoutForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    checkoutButton.disabled = true;
-                    checkoutButton.classList.add('btn-loading');
-                    checkoutButton.textContent = 'A processar...';
-
-                    if (cart.length === 0) {
-                        showMessageBox("O seu carrinho está vazio. Adicione produtos antes de continuar.");
-                        checkoutButton.disabled = false;
-                        checkoutButton.classList.remove('btn-loading');
-                        checkoutButton.textContent = 'Pagar e Finalizar';
-                        return;
-                    }
-
-                    try {
-                        const { data } = await createPaymentIntent({ items: cart });
-                        const { clientSecret } = data;
-
-                        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-                            payment_method: { card: cardElement }
-                        });
-
-                        if (error) {
-                            cardErrors.textContent = error.message;
-                            console.error('Erro na confirmação do pagamento:', error);
-                            showMessageBox("Ocorreu um erro ao processar o pagamento. Por favor, tente novamente.");
-                            checkoutButton.disabled = false;
-                            checkoutButton.classList.remove('btn-loading');
-                            checkoutButton.textContent = 'Pagar e Finalizar';
-                        } else if (paymentIntent.status === 'succeeded') {
-                            console.log('Pagamento bem-sucedido:', paymentIntent);
-                            showMessageBox("Pagamento efetuado com sucesso! O seu pedido será processado em breve. Obrigado pela sua compra!");
-                            
-                            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
-                            const snapshot = await getDocs(userCartRef);
-                            snapshot.forEach(doc => deleteDoc(doc.ref));
-
-                            checkoutButton.disabled = false;
-                            checkoutButton.classList.remove('btn-loading');
-                            checkoutButton.textContent = 'Pagar e Finalizar';
-                        }
-                    } catch (error) {
-                        console.error('Erro na chamada da função Firebase:', error);
-                        cardErrors.textContent = "Erro na comunicação com o servidor. Por favor, tente novamente.";
-                        showMessageBox("Erro na comunicação com o servidor. Por favor, tente novamente.");
-                        checkoutButton.disabled = false;
-                        checkoutButton.classList.remove('btn-loading');
-                        checkoutButton.textContent = 'Pagar e Finalizar';
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao configurar o Stripe:", error);
-                cardErrors.textContent = "Não foi possível carregar o formulário de pagamento. Por favor, recarregue a página.";
-            }
-        }
-        
-        // Chamadas iniciais
-        initFirebase().then(() => {
-            initStripe();
-        });
     </script>
 </body>
 </html>
