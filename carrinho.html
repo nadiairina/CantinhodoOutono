@@ -24,98 +24,92 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-        /* Estilos do Stripe Element */
-        #card-element {
-            border: 1px solid #e5e7eb;
-            padding: 12px;
-            border-radius: 8px;
-            background-color: #fff;
-        }
         .stripe-errors {
-            color: #ef4444; /* red-500 */
-            font-size: 0.875rem; /* text-sm */
-            margin-top: 0.5rem; /* mt-2 */
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
         }
-        .btn-loading {
-            background-color: #ccc;
+        #checkout-button.btn-loading {
+            background-color: #A0522D;
             cursor: not-allowed;
-            animation: pulse 1.5s infinite;
+            opacity: 0.7;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+        #message-box {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
-<body class="bg-[#fef9f5] text-gray-800">
+<body>
 
-    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html"><img src="https://placehold.co/120x40/d2a48c/8B4513?text=Mermaid" alt="Mermaid - Logotipo da Loja" class="h-10"></a>
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold text-[#8B4513]">Mermaid</a>
             <nav>
-                <ul class="flex space-x-6 text-gray-600 font-medium">
-                    <li><a href="index.html" class="hover:text-[#8B4513] transition-colors">Início</a></li>
-                    <li><a href="produtos.html" class="hover:text-[#8B4513] transition-colors">Produtos</a></li>
-                    <li><a href="sobre-nos.html" class="hover:text-[#8B4513] transition-colors">Sobre Nós</a></li>
-                    <li><a href="contactos.html" class="hover:text-[#8B4513] transition-colors">Contacto</a></li>
-                </ul>
+                <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 mr-6">Produtos</a>
+                <a href="carrinho.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Carrinho</a>
+                <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 ml-6">Sobre Nós</a>
+                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 ml-6">Contactos</a>
             </nav>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5.4M7 13l-2.293 2.293c-.63.63-.182 1.953.693 1.953H17M17 17a2 2 0 100 4 2 2 0 000-4zm-4 0a2 2 0 100 4 2 2 0 000-4z" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
         </div>
     </header>
 
-    <main class="mt-8 container mx-auto px-4">
-        <section id="cart-content">
-            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">O seu Carrinho</h1>
-            <div id="cart-items" class="bg-white rounded-xl shadow-md p-6 mb-6">
-                <p id="empty-cart-message" class="text-center text-gray-500 hidden">O seu carrinho está vazio.</p>
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Checkout</h1>
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12">
+                <!-- Seção de Itens do Carrinho -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Seu Pedido</h2>
+                    <div id="cart-items" class="space-y-4">
+                        <!-- Itens do carrinho serão inseridos aqui pelo JavaScript -->
+                        <p class="text-gray-500 text-center">Seu carrinho está vazio.</p>
+                    </div>
+                    <div class="border-t border-gray-200 mt-6 pt-4">
+                        <div class="flex justify-between items-center text-gray-700 font-semibold text-lg">
+                            <span>Total:</span>
+                            <span id="cart-total" class="text-[#8B4513]">€0,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulário de Checkout -->
+                <div class="mt-10 lg:mt-0">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados de Entrega e Pagamento</h2>
+                    <form id="checkout-form">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nome Completo</label>
+                                <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            </div>
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700">Morada de Entrega</label>
+                                <textarea id="address" name="address" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label for="payment-card" class="block text-sm font-medium text-gray-700">Dados do Cartão</label>
+                            <div id="card-element" class="mt-1">
+                                <!-- Elemento de cartão do Stripe será inserido aqui -->
+                            </div>
+                            <div id="card-errors" role="alert" class="stripe-errors"></div>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <button type="submit" id="checkout-button" class="btn-primary text-white font-bold py-3 px-8 rounded-full">
+                                Pagar e Finalizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div id="cart-summary" class="bg-white rounded-xl shadow-md p-6 text-right hidden">
-                <p class="text-xl font-semibold">Total: <span id="cart-total" class="text-[#8B4513]">€ 0,00</span></p>
-            </div>
-            
-            <h2 class="text-4xl font-bold text-gray-800 my-8 text-center">Finalizar Compra</h2>
-            <form id="checkout-form" class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Nome Completo</label>
-                        <input type="text" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                        <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <label for="address" class="block text-sm font-medium text-gray-700">Morada Completa</label>
-                    <textarea id="address" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
-                </div>
-                <div class="mt-6">
-                    <label for="payment-card" class="block text-sm font-medium text-gray-700">Dados do Cartão</label>
-                    <div id="card-element" class="mt-1">
-                    </div>
-                    <div id="card-errors" role="alert" class="stripe-errors"></div>
-                </div>
-                <div class="mt-8 text-center">
-                    <button type="submit" id="checkout-button" class="btn-primary text-white font-bold py-3 px-8 rounded-full">Pagar e Finalizar</button>
-                </div>
-            </form>
         </section>
     </main>
 
@@ -128,10 +122,183 @@
     <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white p-6 rounded-lg shadow-xl text-center">
             <p id="message-text" class="text-lg font-semibold mb-4"></p>
-            <button onclick="closeMessageBox()" class="btn-primary text-white font-bold py-2 px-6 rounded-full">OK</button>
+            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
         </div>
     </div>
     
-    <script type="module" src="script.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId, cart = [];
+        let stripe, elements;
+
+        // Elementos do DOM
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+        const checkoutForm = document.getElementById('checkout-form');
+        const cardErrors = document.getElementById('card-errors');
+        const checkoutButton = document.getElementById('checkout-button');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        async function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Utilizador autenticado com ID:", userId);
+                        listenToCart();
+                    } else {
+                        userId = null;
+                        console.log("Usuário não autenticado.");
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao configurar o Firebase:", error);
+            }
+        }
+
+        // Ouve as mudanças no carrinho em tempo real
+        function listenToCart() {
+            if (!userId) {
+                console.error("Não há userId. Não é possível ouvir o carrinho.");
+                return;
+            }
+
+            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
+            onSnapshot(userCartRef, (snapshot) => {
+                cart = [];
+                let total = 0;
+                cartItemsContainer.innerHTML = '';
+                if (snapshot.empty) {
+                    cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center">Seu carrinho está vazio.</p>';
+                } else {
+                    snapshot.forEach(doc => {
+                        const product = { id: doc.id, ...doc.data() };
+                        cart.push(product);
+                        const productTotal = product.price * product.quantity;
+                        total += productTotal;
+
+                        const productElement = document.createElement('div');
+                        productElement.className = 'flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-sm';
+                        productElement.innerHTML = `
+                            <div class="flex items-center">
+                                <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-lg mr-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
+                                    <p class="text-sm text-gray-500">Quantidade: ${product.quantity}</p>
+                                </div>
+                            </div>
+                            <span class="text-lg font-bold text-gray-800">€${productTotal.toFixed(2)}</span>
+                        `;
+                        cartItemsContainer.appendChild(productElement);
+                    });
+                }
+                cartTotalElement.textContent = `€${total.toFixed(2)}`;
+            }, (error) => {
+                console.error("Erro ao ouvir o carrinho:", error);
+            });
+        }
+
+        async function initStripe() {
+            try {
+                const stripeKey = 'pk_test_51PZ8tY2Mi5c7xNRYF9l5Y9l4zD4Ua7Z4l2vVb0D1Zp9Z0hQ8D4c3tG4dG5qH1I0t4kP4B9y3F2gK8fE5gH6';
+                stripe = Stripe(stripeKey);
+                elements = stripe.elements();
+
+                const cardElement = elements.create('card');
+                cardElement.mount('#card-element');
+
+                cardElement.on('change', (event) => {
+                    cardErrors.textContent = event.error ? event.error.message : '';
+                    checkoutButton.disabled = event.empty || event.error;
+                });
+
+                const functions = getFunctions(initializeApp(firebaseConfig));
+                const createPaymentIntent = httpsCallable(functions, 'createPaymentIntent');
+
+                checkoutForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    checkoutButton.disabled = true;
+                    checkoutButton.classList.add('btn-loading');
+                    checkoutButton.textContent = 'A processar...';
+
+                    if (cart.length === 0) {
+                        showMessageBox("O seu carrinho está vazio. Adicione produtos antes de continuar.");
+                        checkoutButton.disabled = false;
+                        checkoutButton.classList.remove('btn-loading');
+                        checkoutButton.textContent = 'Pagar e Finalizar';
+                        return;
+                    }
+
+                    try {
+                        const { data } = await createPaymentIntent({ items: cart });
+                        const { clientSecret } = data;
+
+                        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+                            payment_method: { card: cardElement }
+                        });
+
+                        if (error) {
+                            cardErrors.textContent = error.message;
+                            console.error('Erro na confirmação do pagamento:', error);
+                            showMessageBox("Ocorreu um erro ao processar o pagamento. Por favor, tente novamente.");
+                            checkoutButton.disabled = false;
+                            checkoutButton.classList.remove('btn-loading');
+                            checkoutButton.textContent = 'Pagar e Finalizar';
+                        } else if (paymentIntent.status === 'succeeded') {
+                            console.log('Pagamento bem-sucedido:', paymentIntent);
+                            showMessageBox("Pagamento efetuado com sucesso! O seu pedido será processado em breve. Obrigado pela sua compra!");
+                            
+                            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
+                            const snapshot = await getDocs(userCartRef);
+                            snapshot.forEach(doc => deleteDoc(doc.ref));
+
+                            checkoutButton.disabled = false;
+                            checkoutButton.classList.remove('btn-loading');
+                            checkoutButton.textContent = 'Pagar e Finalizar';
+                        }
+                    } catch (error) {
+                        console.error('Erro na chamada da função Firebase:', error);
+                        cardErrors.textContent = "Erro na comunicação com o servidor. Por favor, tente novamente.";
+                        showMessageBox("Erro na comunicação com o servidor. Por favor, tente novamente.");
+                        checkoutButton.disabled = false;
+                        checkoutButton.classList.remove('btn-loading');
+                        checkoutButton.textContent = 'Pagar e Finalizar';
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao configurar o Stripe:", error);
+                cardErrors.textContent = "Não foi possível carregar o formulário de pagamento. Por favor, recarregue a página.";
+            }
+        }
+        
+        // Chamadas iniciais
+        initFirebase().then(() => {
+            initStripe();
+        });
+    </script>
 </body>
 </html>
