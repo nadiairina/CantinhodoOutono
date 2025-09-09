@@ -37,6 +37,42 @@ function removeFromCart(productId) {
     saveCart(updatedCart);
 }
 
+// Animação "fly to cart"
+function flyToCartAnimation(imageElement) {
+    const cartIcon = document.querySelector('.cart-icon-container a');
+    const imageRect = imageElement.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    const flyingImage = imageElement.cloneNode(true);
+    flyingImage.style.position = 'fixed';
+    flyingImage.style.top = `${imageRect.top}px`;
+    flyingImage.style.left = `${imageRect.left}px`;
+    flyingImage.style.width = `${imageRect.width}px`;
+    flyingImage.style.height = `${imageRect.height}px`;
+    flyingImage.style.opacity = '1';
+    flyingImage.style.transition = 'all 1s ease-in-out';
+    flyingImage.style.zIndex = '1000';
+    flyingImage.style.borderRadius = '9999px'; // Faz a imagem redonda
+
+    document.body.appendChild(flyingImage);
+
+    // Forçar a re-pintura antes de iniciar a transição
+    flyingImage.getBoundingClientRect(); 
+    
+    // Mover a imagem para o ícone do carrinho
+    flyingImage.style.top = `${cartRect.top}px`;
+    flyingImage.style.left = `${cartRect.left}px`;
+    flyingImage.style.width = '30px';
+    flyingImage.style.height = '30px';
+    flyingImage.style.opacity = '0.5';
+
+    // Remover o elemento após a animação
+    setTimeout(() => {
+        flyingImage.remove();
+    }, 1000);
+}
+
+
 // Carregar o contador do carrinho ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
@@ -45,6 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
             button.addEventListener('click', () => {
+                const productCard = button.closest('.product-card');
+                const productImage = productCard.querySelector('img');
+
+                if (productImage) {
+                    flyToCartAnimation(productImage);
+                }
+
                 const product = {
                     id: button.dataset.id,
                     name: button.dataset.name,
