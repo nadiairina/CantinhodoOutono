@@ -153,6 +153,7 @@
                                 <div>
                                     <label for="city" class="block text-sm font-medium text-gray-700">Cidade</label>
                                     <input type="text" id="city" name="city" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
+                                </div>
                             </div>
                         </div>
 
@@ -266,21 +267,11 @@
 
             checkoutForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                
+                
                 setTimeout(() => {
-                    // Esconde todo o conteúdo do carrinho
                     checkoutContent.classList.add('hidden');
-
-                    // Mostra a mensagem de sucesso
                     successMessage.classList.remove('hidden');
 
-                    // Faz a página rolar para o topo para que a mensagem de sucesso seja imediatamente visível
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-
-                    // Limpa o carrinho
                     localStorage.removeItem('cart');
                     updateCartCount();
                 }, 1000);
@@ -294,7 +285,7 @@
             const cart = localStorage.getItem('cart');
             return cart ? JSON.parse(cart) : [];
         }
-        
+        
         function saveCart(cart) {
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
@@ -401,7 +392,7 @@
             const cart = getCart();
             const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
             const total = subtotal + SHIPPING_COST;
-            
+            
             document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
             document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
         }
