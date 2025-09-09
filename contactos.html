@@ -49,6 +49,20 @@
             font-weight: bold;
             line-height: 1;
         }
+        #cart-preview {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 1rem;
+            z-index: 50;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -65,58 +79,70 @@
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <a href="#" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
+                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
+                        <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
+                        <div class="flex justify-center mt-4">
+                            <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 fade-in">
-            <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Entre em Contacto Connosco</h1>
-            <div class="flex flex-col lg:flex-row lg:space-x-8">
-                <div class="lg:w-1/2">
-                    <p class="text-gray-600 mb-6">Estamos aqui para ajudar com qualquer questão sobre os nossos produtos, a sua encomenda ou a nossa loja. Pode contactar-nos através do formulário abaixo ou pelas nossas redes sociais.</p>
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span><a href="mailto:info@cantinhodeoutono.pt" class="text-gray-600 hover:underline">info@cantinhodeoutono.pt</a></span>
-                        </div>
-                        <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span>Rua das Folhas Caídas, 123, 4560-789 Outono, Portugal</span>
-                        </div>
+        <section class="max-w-4xl mx-auto text-center bg-white p-8 md:p-12 rounded-2xl shadow-xl">
+            <h1 class="text-5xl font-extrabold text-[#8B4513] mb-6 fade-in">Fale Connosco</h1>
+            <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto fade-in">
+                Estamos sempre disponíveis para responder às suas questões. Use o formulário abaixo ou os nossos contactos diretos.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-12 text-left">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Morada</h3>
+                        <p class="text-gray-600">
+                            Rua das Flores, 123<br>
+                            1200-123 Lisboa<br>
+                            Portugal
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
+                        <p class="text-gray-600">
+                            <a href="mailto:geral@mermaid.pt" class="text-[#8B4513] hover:underline">geral@mermaid.pt</a>
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Telefone</h3>
+                        <p class="text-gray-600">+351 912 345 678</p>
                     </div>
                 </div>
-                <div class="lg:w-1/2 mt-8 lg:mt-0">
-                    <form id="contactForm" class="bg-gray-100 p-6 rounded-xl shadow-inner">
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nome Completo</label>
+
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Envie-nos uma Mensagem</h2>
+                    <form action="#" method="POST" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
                             <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
-                        <div class="mb-4">
+                        <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                             <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
-                        <div class="mb-4">
-                            <label for="subject" class="block text-sm font-medium text-gray-700">Assunto</label>
-                            <input type="text" id="subject" name="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                        </div>
-                        <div class="mb-4">
+                        <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Mensagem</label>
                             <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
                         </div>
-                        <button type="submit" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full">Enviar Mensagem</button>
+                        <div class="text-right">
+                            <button type="submit" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Enviar Mensagem</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -125,7 +151,7 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Mermaid. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -147,13 +173,6 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
-        });
-
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('A sua mensagem foi enviada com sucesso! Em breve entraremos em contacto.');
-            contactForm.reset();
         });
     </script>
 </body>
