@@ -9,138 +9,77 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, deleteDoc, onSnapshot, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Substitua ESTES valores pelas suas credenciais reais do Firebase
-        const firebaseConfig = {
-            apiKey: "SUA_API_KEY",
-            authDomain: "SEU_AUTH_DOMAIN",
-            projectId: "SEU_PROJECT_ID",
-            storageBucket: "SEU_STORAGE_BUCKET",
-            messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-            appId: "SEU_APP_ID",
-        };
-        const appId = "SEU_APP_ID";
-
-        let db, auth, userId, cart = [];
-
-        // Função de inicialização do Firebase
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                // Autenticação do utilizador de forma anónima
-                await signInAnonymously(auth);
-                
-                // Observador para o estado de autenticação
-                onAuthStateChanged(auth, user => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Utilizador autenticado com ID:", userId);
-                        // Inicia a escuta em tempo real do carrinho do utilizador
-                        listenToCart();
-                    } else {
-                        userId = null;
-                        console.log("Usuário não autenticado.");
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao inicializar o Firebase:", error);
-                showMessageBox("Erro ao conectar com a loja. Tente novamente mais tarde.");
-            }
-        }
-        
-        // Chamada da função de inicialização
-        initFirebase();
-
-        // Função para escutar as mudanças no carrinho em tempo real
-        function listenToCart() {
-            if (!userId) {
-                console.log("userId não disponível para listenToCart.");
-                return;
-            }
-            const cartCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/cart`);
-            onSnapshot(cartCollectionRef, (querySnapshot) => {
-                cart = [];
-                querySnapshot.forEach((doc) => {
-                    cart.push({ id: doc.id, ...doc.data() });
-                });
-                updateCartDisplay();
-            });
-        }
-    </script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
         }
-
         .hero-section {
             background-color: #fcd5b4;
         }
-        
         .animated-gradient {
             background-size: 400% 400%;
             animation: gradient-animation 10s ease infinite;
         }
-
         @keyframes gradient-animation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         .btn-primary {
             background-color: #ff914d;
             transition: all 0.3s ease;
         }
-
         .btn-primary:hover {
             background-color: #ff7f33;
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .product-card {
             transition: transform 0.3s ease;
         }
-
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-
         .page-content {
             display: none;
         }
-
         .page-content.active {
             display: block;
         }
-
         /* Animações de scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
         /* Estilos do Stripe Element */
         #card-element {
             border: 1px solid #e5e7eb;
             padding: 12px;
             border-radius: 8px;
             background-color: #fff;
+        }
+        .stripe-errors {
+            color: #ef4444; /* red-500 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 0.5rem; /* mt-2 */
+        }
+        /* Animação para o botão de loading */
+        .btn-loading {
+            background-color: #ccc;
+            cursor: not-allowed;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -227,7 +166,7 @@
         <section id="products" class="page-content">
             <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Toda a Coleção</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                </div>
+            </div>
         </section>
 
         <section id="cart" class="page-content">
@@ -245,7 +184,7 @@
         <section id="checkout" class="page-content">
             <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Finalizar Compra</h2>
             <div id="checkout-items" class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto mb-6">
-                </div>
+            </div>
             <form id="checkout-form" class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -264,8 +203,8 @@
                 <div class="mt-6">
                     <label for="payment-card" class="block text-sm font-medium text-gray-700">Dados do Cartão</label>
                     <div id="card-element" class="mt-1">
-                        </div>
-                    <div id="card-errors" role="alert" class="text-red-500 mt-2 text-sm"></div>
+                    </div>
+                    <div id="card-errors" role="alert" class="stripe-errors"></div>
                 </div>
                 <div class="mt-8 text-center">
                     <button type="submit" id="checkout-button" class="btn-primary text-white font-bold py-3 px-8 rounded-full">Pagar e Finalizar</button>
@@ -304,7 +243,6 @@
                 </form>
             </div>
         </section>
-
     </main>
 
     <footer class="bg-[#ff914d] text-white py-8 mt-12">
@@ -319,8 +257,55 @@
             <button onclick="closeMessageBox()" class="btn-primary text-white font-bold py-2 px-6 rounded-full">OK</button>
         </div>
     </div>
+    
+    <script type="module">
+        // Firebase imports from CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, deleteDoc, onSnapshot, collection, updateDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <script>
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(__firebase_config);
+
+        let db, auth, userId, cart = [];
+
+        // Função de inicialização do Firebase
+        async function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Autenticação do utilizador
+                const __initial_auth_token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
+                if (__initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Observador para o estado de autenticação
+                onAuthStateChanged(auth, user => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Utilizador autenticado com ID:", userId);
+                        // Inicia a escuta em tempo real do carrinho do utilizador
+                        listenToCart();
+                    } else {
+                        userId = null;
+                        console.log("Usuário não autenticado.");
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao inicializar o Firebase:", error);
+                showMessageBox("Erro ao conectar com a loja. Tente novamente mais tarde.");
+            }
+        }
+        
+        // Chamada da função de inicialização
+        initFirebase();
+
+        // Dados estáticos de produtos
         const products = [
             { id: '1', name: 'Biquíni Onda', price: 49.99, image: 'https://placehold.co/400x400/ff914d/ffffff?text=Biquini+1', sizes: ['S', 'M', 'L'] },
             { id: '2', name: 'Fato de Banho Sol', price: 59.99, image: 'https://placehold.co/400x400/fcd5b4/ffffff?text=Biquini+2', sizes: ['S', 'M', 'L'] },
@@ -355,19 +340,38 @@
                 showMessageBox("Erro: Utilizador não autenticado. A página está a carregar, por favor, tente em alguns segundos.");
                 return;
             }
-
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${product.id}-${product.size}`);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                const currentQuantity = docSnap.data().quantity;
-                await updateDoc(docRef, { quantity: currentQuantity + 1 });
-            } else {
-                await setDoc(docRef, { ...product, quantity: 1, size: product.size });
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${product.id}-${product.size}`);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const currentQuantity = docSnap.data().quantity;
+                    await updateDoc(docRef, { quantity: currentQuantity + 1 });
+                } else {
+                    await setDoc(docRef, { ...product, quantity: 1, size: product.size });
+                }
+                showMessageBox(`Produto "${product.name}" (Tamanho: ${product.size}) adicionado ao carrinho!`);
+            } catch (error) {
+                console.error("Erro ao adicionar ao carrinho:", error);
+                showMessageBox("Ocorreu um erro ao adicionar ao carrinho. Por favor, tente novamente.");
             }
-            showMessageBox(`Produto "${product.name}" (Tamanho: ${product.size}) adicionado ao carrinho!`);
         }
 
+        // Função para escutar as mudanças no carrinho em tempo real
+        function listenToCart() {
+            if (!userId) {
+                console.log("userId não disponível para listenToCart.");
+                return;
+            }
+            const cartCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/cart`);
+            onSnapshot(cartCollectionRef, (querySnapshot) => {
+                cart = [];
+                querySnapshot.forEach((doc) => {
+                    cart.push({ id: doc.id, ...doc.data() });
+                });
+                updateCartDisplay();
+            });
+        }
+        
         function updateCartDisplay() {
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotalSpan = document.getElementById('cart-total');
@@ -397,8 +401,8 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
-                            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id}', this.value, '${item.size}')" class="w-16 text-center rounded-md border-gray-300">
-                            <button onclick="removeFromCart('${item.id}', '${item.size}')" class="text-red-500 hover:text-red-700 transition-colors">Remover</button>
+                            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id.replace(/'/g, "\\'")}', this.value, '${item.size.replace(/'/g, "\\'")}')" class="w-16 text-center rounded-md border-gray-300">
+                            <button onclick="removeFromCart('${item.id.replace(/'/g, "\\'")}', '${item.size.replace(/'/g, "\\'")}')" class="text-red-500 hover:text-red-700 transition-colors">Remover</button>
                         </div>
                     `;
                     cartItemsContainer.appendChild(itemElement);
@@ -411,19 +415,29 @@
 
         async function updateQuantity(id, quantity, size) {
             if (!userId) return;
-            const newQuantity = parseInt(quantity);
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${id}-${size}`);
-            if (newQuantity <= 0) {
-                await deleteDoc(docRef);
-            } else {
-                await updateDoc(docRef, { quantity: newQuantity });
+            try {
+                const newQuantity = parseInt(quantity);
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${id}-${size}`);
+                if (newQuantity <= 0) {
+                    await deleteDoc(docRef);
+                } else {
+                    await updateDoc(docRef, { quantity: newQuantity });
+                }
+            } catch (error) {
+                console.error("Erro ao atualizar a quantidade:", error);
+                showMessageBox("Ocorreu um erro ao atualizar a quantidade. Por favor, tente novamente.");
             }
         }
 
         async function removeFromCart(id, size) {
             if (!userId) return;
-            const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${id}-${size}`);
-            await deleteDoc(docRef);
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/cart/${id}-${size}`);
+                await deleteDoc(docRef);
+            } catch (error) {
+                console.error("Erro ao remover do carrinho:", error);
+                showMessageBox("Ocorreu um erro ao remover o item do carrinho. Por favor, tente novamente.");
+            }
         }
 
         // Funções para a navegação de páginas
@@ -436,8 +450,6 @@
 
             if (pageId === 'products') {
                 renderProducts();
-            } else if (pageId === 'cart') {
-                // A exibição do carrinho será atualizada automaticamente pelo listener do Firestore
             } else if (pageId === 'checkout') {
                 setupStripeCheckout();
             }
@@ -468,37 +480,119 @@
             });
         }
 
+        // Função para mostrar a caixa de mensagem
+        function showMessageBox(message) {
+            document.getElementById('message-text').textContent = message;
+            document.getElementById('message-box').classList.remove('hidden');
+            document.getElementById('message-box').classList.add('flex');
+        }
+
+        // Função para fechar a caixa de mensagem
+        function closeMessageBox() {
+            document.getElementById('message-box').classList.remove('flex');
+            document.getElementById('message-box').classList.add('hidden');
+        }
+
         // AQUI ESTÁ A LÓGICA DO CHECKOUT COM STRIPE
         let stripe;
         async function setupStripeCheckout() {
-            if (!stripe) {
-                // SUBSTITUA 'pk_test_SEU_PUBLIC_KEY' pela sua chave pública do Stripe
-                stripe = Stripe('pk_test_SEU_PUBLIC_KEY');
-            }
-
-            const elements = stripe.elements();
-            const cardElement = elements.create('card');
-            cardElement.mount('#card-element');
-
-            const checkoutForm = document.getElementById('checkout-form');
-            const cardErrors = document.getElementById('card-errors');
-
-            const checkoutItemsContainer = document.getElementById('checkout-items');
-            checkoutItemsContainer.innerHTML = '';
-            let total = 0;
-            cart.forEach(item => {
-                total += item.price * item.quantity;
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('flex', 'justify-between', 'items-center', 'mb-2');
-                itemElement.innerHTML = `
-                    <p class="text-gray-600">${item.name} (Tamanho: ${item.size}) x ${item.quantity}</p>
-                    <p class="font-semibold">€ ${(item.price * item.quantity).toFixed(2)}</p>
+            try {
+                // Substitua a chave pública do Stripe pela sua chave real, se estiver em produção
+                if (!stripe) {
+                    stripe = Stripe('pk_test_51P71cR2KkE3E7hT5rV1X4nU3g7fQ8gJ5tA6eG8q8J0nL1c7r9B3gC2eG8gN1r7y6jR9E3gC2eG8gN1r7y6jR'); // Chave de exemplo
+                }
+                const elements = stripe.elements();
+                const cardElement = elements.create('card');
+                cardElement.mount('#card-element');
+                
+                const checkoutItemsContainer = document.getElementById('checkout-items');
+                checkoutItemsContainer.innerHTML = '';
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('flex', 'justify-between', 'items-center', 'mb-2');
+                    itemElement.innerHTML = `
+                        <p class="text-gray-600">${item.name} (Tamanho: ${item.size}) x ${item.quantity}</p>
+                        <p class="font-semibold">€ ${(item.price * item.quantity).toFixed(2)}</p>
+                    `;
+                    checkoutItemsContainer.appendChild(itemElement);
+                });
+                const totalElement = document.createElement('div');
+                totalElement.classList.add('flex', 'justify-between', 'items-center', 'font-bold', 'text-lg', 'mt-4', 'pt-4', 'border-t', 'border-gray-200');
+                totalElement.innerHTML = `
+                    <span>Total</span>
+                    <span class="text-[#ff7f33]">€ ${total.toFixed(2)}</span>
                 `;
-                checkoutItemsContainer.appendChild(itemElement);
-            });
-            const totalElement = document.createElement('div');
-            totalElement.classList.add('flex', 'justify-between', 'items-center', 'font-bold', 'text-lg', 'mt-4', 'pt-4', 'border-t', 'border-gray-200');
-            totalElement.innerHTML = `
-                <span>Total</span>
-                <span class="text-[#ff7f33]">€ ${total.toFixed(2)}</span>
-            `;
+                checkoutItemsContainer.appendChild(totalElement);
+
+                // Tratamento do envio do formulário
+                const checkoutForm = document.getElementById('checkout-form');
+                const cardErrors = document.getElementById('card-errors');
+                const checkoutButton = document.getElementById('checkout-button');
+
+                checkoutForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    
+                    if (cart.length === 0) {
+                        showMessageBox("O seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+                        return;
+                    }
+
+                    // Adicionar estado de loading ao botão
+                    checkoutButton.disabled = true;
+                    checkoutButton.classList.add('btn-loading');
+                    checkoutButton.textContent = 'A processar...';
+
+                    const { token, error } = await stripe.createToken(cardElement, {
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        address_zip: '12345' // Exemplo
+                    });
+
+                    if (error) {
+                        cardErrors.textContent = error.message;
+                        checkoutButton.disabled = false;
+                        checkoutButton.classList.remove('btn-loading');
+                        checkoutButton.textContent = 'Pagar e Finalizar';
+                    } else {
+                        // Simulação de pagamento bem-sucedido
+                        console.log("Token do Stripe gerado:", token);
+                        cardErrors.textContent = '';
+                        showMessageBox("Pagamento efetuado com sucesso! O seu pedido será processado em breve. Obrigado pela sua compra!");
+                        
+                        // Limpar o carrinho no Firestore
+                        await clearCart();
+                        
+                        // Limpar o formulário e resetar o botão
+                        checkoutForm.reset();
+                        checkoutButton.disabled = false;
+                        checkoutButton.classList.remove('btn-loading');
+                        checkoutButton.textContent = 'Pagar e Finalizar';
+                        showPage('home');
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao configurar o Stripe Checkout:", error);
+                showMessageBox("Erro ao carregar a página de pagamento. Por favor, tente novamente.");
+            }
+        }
+        
+        async function clearCart() {
+            if (!userId) return;
+            try {
+                const cartRef = collection(db, `artifacts/${appId}/users/${userId}/cart`);
+                const querySnapshot = await getDocs(cartRef);
+                querySnapshot.forEach(async (doc) => {
+                    await deleteDoc(doc.ref);
+                });
+            } catch (error) {
+                console.error("Erro ao limpar o carrinho:", error);
+            }
+        }
+        
+        // Chamada inicial para a página home
+        window.onload = () => showPage('home');
+    </script>
+</body>
+</html>
