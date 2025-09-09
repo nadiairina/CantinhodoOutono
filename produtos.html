@@ -59,20 +59,19 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/8B4513/ffffff?text=Logo" alt="Logo Cantinho de Outono" class="rounded-lg">
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
+                <span class="text-3xl font-bold text-[#8B4513]">Mermaid</span>
             </a>
             <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
                 <a href="produtos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Produtos</a>
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
                     <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
-                        <!-- Ícone de carrinho SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -90,7 +89,6 @@
                 Explore a nossa seleção de produtos artesanais e de alta qualidade, perfeitos para tornar a sua casa mais acolhedora nesta estação.
             </p>
             <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Produto: Caneca Artesanal -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca artesanal de cerâmica com design de folha de outono" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Caneca de Cerâmica</h2>
@@ -104,7 +102,6 @@
                     </button>
                 </div>
                 
-                <!-- Produto: Vela Aromática -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Vela" alt="Vela aromática com fragrância de canela e baunilha" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Vela Aromática</h2>
@@ -112,13 +109,12 @@
                     <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
                         data-id="vela" 
                         data-name="Vela Aromática" 
-                        data-price="15.50"
+                        data-price="15.50" 
                         data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Vela">
                         Adicionar ao Carrinho
                     </button>
                 </div>
-
-                <!-- Produto: Cobertor Aconchegante -->
+                
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h2>
@@ -126,50 +122,8 @@
                     <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
                         data-id="cobertor" 
                         data-name="Cobertor Aconchegante" 
-                        data-price="79.99"
+                        data-price="79.99" 
                         data-image="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                
-                <!-- Produto: Almofada Decorativa -->
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada" alt="Almofada decorativa em tecido de veludo castanho" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Almofada Decorativa</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 25,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
-                        data-id="almofada" 
-                        data-name="Almofada Decorativa" 
-                        data-price="25.00"
-                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-
-                <!-- Produto: Difusor de Essências -->
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Difusor" alt="Difusor de essências com acabamento em madeira escura" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Difusor de Essências</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 39,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
-                        data-id="difusor" 
-                        data-name="Difusor de Essências" 
-                        data-price="39.00"
-                        data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Difusor">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-
-                <!-- Produto: Quadro "Folhas Caídas" -->
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/F4A460/ffffff?text=Quadro" alt='Quadro com ilustrações de folhas caídas de outono' class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Quadro "Folhas Caídas"</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 35,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
-                        data-id="quadro" 
-                        data-name="Quadro 'Folhas Caídas'" 
-                        data-price="35.00"
-                        data-image="https://placehold.co/400x400/F4A460/ffffff?text=Quadro">
                         Adicionar ao Carrinho
                     </button>
                 </div>
@@ -183,112 +137,11 @@
         </div>
     </footer>
     
-    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
-            <p id="message-text" class="text-lg font-semibold mb-4"></p>
-            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, collection, increment, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth, userId;
-
-        // Elementos do DOM
+    <script type="module" src="script.js"></script>
+    <script>
         const cartItemCountElement = document.getElementById('cart-item-count');
         const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
-
-        function showMessageBox(message) {
-            messageText.textContent = message;
-            messageBox.classList.remove('hidden');
-            setTimeout(() => {
-                messageBox.classList.add('hidden');
-            }, 3000);
-        }
-
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Utilizador autenticado com ID:", userId);
-                        listenToCart();
-                    } else {
-                        userId = null;
-                        console.log("Usuário não autenticado.");
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao configurar o Firebase:", error);
-            }
-        }
-
-        // Ouve as mudanças no carrinho em tempo real
-        function listenToCart() {
-            if (!userId) {
-                console.error("Não há userId. Não é possível ouvir o carrinho.");
-                return;
-            }
-
-            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
-            onSnapshot(userCartRef, (snapshot) => {
-                let itemCount = 0;
-                snapshot.forEach(doc => {
-                    itemCount += doc.data().quantity;
-                });
-                cartItemCountElement.textContent = itemCount;
-            }, (error) => {
-                console.error("Erro ao ouvir o carrinho:", error);
-            });
-        }
-
-        async function addToCart(product) {
-            if (!userId) {
-                showMessageBox("Por favor, espere enquanto a aplicação se conecta.");
-                return;
-            }
-
-            const productRef = doc(db, `/artifacts/${appId}/users/${userId}/cart`, product.id);
-
-            try {
-                const productDoc = await getDoc(productRef);
-                if (productDoc.exists()) {
-                    await setDoc(productRef, { quantity: increment(1) }, { merge: true });
-                } else {
-                    await setDoc(productRef, {
-                        id: product.id,
-                        name: product.name,
-                        price: parseFloat(product.price),
-                        image: product.image,
-                        quantity: 1
-                    });
-                }
-                showMessageBox(`'${product.name}' adicionado ao carrinho!`);
-            } catch (error) {
-                console.error("Erro ao adicionar produto ao carrinho:", error);
-                showMessageBox("Ocorreu um erro. Não foi possível adicionar o produto ao carrinho.");
-            }
-        }
-
+        
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
         const appearOptions = { threshold: 0.25 };
@@ -307,7 +160,6 @@
             appearOnScroll.observe(fader);
         });
 
-        // Eventos dos botões "Adicionar ao Carrinho"
         addToCartButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const product = {
@@ -319,9 +171,6 @@
                 addToCart(product);
             });
         });
-
-        // Chamada inicial
-        initFirebase();
     </script>
 </body>
 </html>
