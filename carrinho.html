@@ -69,7 +69,17 @@
     <main class="container mx-auto px-4 py-8">
         <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
             <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Checkout</h1>
-            <div class="lg:grid lg:grid-cols-2 lg:gap-12">
+            
+            <div id="success-message" class="hidden text-center py-16">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Compra Realizada com Sucesso!</h2>
+                <p class="text-gray-600 text-lg">Agradecemos a sua compra. Siga os passos da sua encomenda no e-mail que acabámos de enviar.</p>
+                <a href="index.html" class="inline-block mt-8 btn-primary text-white font-bold py-3 px-8 rounded-full">Voltar à Página Inicial</a>
+            </div>
+
+            <div id="checkout-content" class="lg:grid lg:grid-cols-2 lg:gap-12">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Seu Pedido</h2>
                     <div id="cart-items" class="space-y-4">
@@ -170,13 +180,27 @@
             renderCart();
         });
 
-        // Simulação do pagamento
+        // Lógica de simulação do pagamento
         const checkoutForm = document.getElementById('checkout-form');
+        const checkoutContent = document.getElementById('checkout-content');
+        const successMessage = document.getElementById('success-message');
+
         checkoutForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('Pagamento simulado com sucesso! O seu pedido será processado em breve.');
-            localStorage.removeItem('cart'); // Simula a limpeza do carrinho após a compra
-            window.location.reload(); // Recarrega a página para mostrar o carrinho vazio
+            
+            // Simula o processamento
+            // Por questões de segurança, este seria um passo no backend
+            setTimeout(() => {
+                // Esconde o conteúdo do checkout
+                checkoutContent.classList.add('hidden');
+                
+                // Mostra a mensagem de sucesso
+                successMessage.classList.remove('hidden');
+
+                // Limpa o carrinho
+                localStorage.removeItem('cart');
+                updateCartCount(); // Atualiza o contador do carrinho para 0
+            }, 1000); // 1 segundo de "processamento"
         });
     </script>
 </body>
