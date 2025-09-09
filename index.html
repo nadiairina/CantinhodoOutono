@@ -53,31 +53,46 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .cart-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+        .cart-item-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 9999px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 1;
+        }
     </style>
 </head>
 <body class="bg-[#fef9f5] text-gray-800">
 
-    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html"><img src="https://placehold.co/120x40/d2a48c/8B4513?text=Mermaid" alt="Mermaid - Logotipo da Loja" class="h-10"></a>
-            <nav>
-                <ul class="flex space-x-6 text-gray-600 font-medium">
-                    <li><a href="index.html" class="hover:text-[#8B4513] transition-colors">Início</a></li>
-                    <li><a href="produtos.html" class="hover:text-[#8B4513] transition-colors">Produtos</a></li>
-                    <li><a href="sobre-nos.html" class="hover:text-[#8B4513] transition-colors">Sobre Nós</a></li>
-                    <li><a href="contactos.html" class="hover:text-[#8B4513] transition-colors">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
+                <span class="text-3xl font-bold text-[#8B4513]">Mermaid</span>
+            </a>
+            <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Início</a>
+                <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Produtos</a>
+                <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
+                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
+                <div class="cart-icon-container">
+                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span id="cart-item-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">0</span>
                     </a>
+                    <span id="cart-item-count" class="cart-item-count">0</span>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -122,7 +137,7 @@
         </div>
     </footer>
 
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
     <script>
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
@@ -140,20 +155,6 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
-        });
-
-        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const product = {
-                    id: button.dataset.id,
-                    name: button.dataset.name,
-                    price: button.dataset.price,
-                    image: button.dataset.image
-                };
-                addToCart(product);
-            });
         });
     </script>
 </body>
