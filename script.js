@@ -7,6 +7,7 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
+    renderCartPreview(); // Atualiza a pré-visualização ao salvar
 }
 
 function updateCartCount() {
@@ -52,31 +53,65 @@ function flyToCartAnimation(imageElement) {
     flyingImage.style.opacity = '1';
     flyingImage.style.transition = 'all 1s ease-in-out';
     flyingImage.style.zIndex = '1000';
-    flyingImage.style.borderRadius = '9999px'; // Faz a imagem redonda
+    flyingImage.style.borderRadius = '9999px';
 
     document.body.appendChild(flyingImage);
 
-    // Forçar a re-pintura antes de iniciar a transição
-    flyingImage.getBoundingClientRect(); 
+    flyingImage.getBoundingClientRect();
     
-    // Mover a imagem para o ícone do carrinho
     flyingImage.style.top = `${cartRect.top}px`;
     flyingImage.style.left = `${cartRect.left}px`;
     flyingImage.style.width = '30px';
     flyingImage.style.height = '30px';
     flyingImage.style.opacity = '0.5';
 
-    // Remover o elemento após a animação
     setTimeout(() => {
         flyingImage.remove();
     }, 1000);
 }
 
+// Pré-visualização do carrinho
+function renderCartPreview() {
+    const cartPreviewContainer = document.getElementById('cart-preview-items');
+    if (!cartPreviewContainer) return;
 
-// Carregar o contador do carrinho ao carregar a página
+    const cart = getCart();
+    cartPreviewContainer.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartPreviewContainer.innerHTML = `<p class="text-gray-500 text-center text-sm">O carrinho está vazio.</p>`;
+    } else {
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+            const itemHTML = `
+                <div class="flex items-center mb-2">
+                    <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-md mr-2">
+                    <div class="flex-grow">
+                        <p class="text-sm font-medium">${item.name}</p>
+                        <p class="text-xs text-gray-500">Qtd: ${item.quantity} | €${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+            cartPreviewContainer.innerHTML += itemHTML;
+        });
+        const totalHTML = `
+            <div class="border-t pt-2 mt-2">
+                <div class="flex justify-between font-bold">
+                    <span>Total:</span>
+                    <span>€${total.toFixed(2)}</span>
+                </div>
+            </div>
+        `;
+        cartPreviewContainer.innerHTML += totalHTML;
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
-    
+    renderCartPreview();
+
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
@@ -99,9 +134,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Lógica para a página do carrinho
     if (document.getElementById('cart-items')) {
         renderCart();
+    }
+
+    const cartIconLink = document.querySelector('.cart-icon-container a');
+    const cartPreview = document.getElementById('cart-preview');
+    if (cartIconLink && cartPreview) {
+        cartIconLink.addEventListener('mouseenter', () => {
+            renderCartPreview();
+            cartPreview.classList.remove('hidden');
+        });
+        cartIconLink.addEventListener('mouseleave', (e) => {
+            // Verificar se o mouse saiu para o pop-up
+            if (!cartPreview.contains(e.relatedTarget)) {
+                 cartPreview.classList.add('hidden');
+            }
+        });
+        cartPreview.addEventListener('mouseleave', () => {
+            cartPreview.classList.add('hidden');
+        });
     }
 });
 
@@ -138,12 +190,11 @@ function renderCart() {
             cartItemsContainer.innerHTML += itemHTML;
         });
 
-        // Adicionar listeners aos botões de remoção
         document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const productId = button.dataset.id;
                 removeFromCart(productId);
-                renderCart(); // Renderizar novamente o carrinho
+                renderCart();
             });
         });
     }
