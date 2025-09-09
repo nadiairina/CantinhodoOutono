@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós | Mermaid</title>
-    <meta name="description" content="Saiba mais sobre a história da Mermaid, a nossa missão de oferecer produtos de decoração aconchegantes e o nosso compromisso com a sustentabilidade.">
+    <title>Sobre Nós | Cantinho de Outono</title>
+    <meta name="description" content="Saiba mais sobre a história da Cantinho de Outono, a nossa missão de oferecer produtos de decoração aconchegantes e o nosso compromisso com a sustentabilidade.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -33,53 +33,137 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .cart-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+        .cart-item-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 9999px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 1;
+        }
     </style>
 </head>
-<body class="bg-[#fef9f5] text-gray-800">
+<body>
 
-    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html"><img src="https://placehold.co/120x40/d2a48c/8B4513?text=Mermaid" alt="Mermaid - Logotipo da Loja" class="h-10"></a>
-            <nav>
-                <ul class="flex space-x-6 text-gray-600 font-medium">
-                    <li><a href="index.html" class="hover:text-[#8B4513] transition-colors">Início</a></li>
-                    <li><a href="produtos.html" class="hover:text-[#8B4513] transition-colors">Produtos</a></li>
-                    <li><a href="sobre-nos.html" class="hover:text-[#8B4513] transition-colors">Sobre Nós</a></li>
-                    <li><a href="contactos.html" class="hover:text-[#8B4513] transition-colors">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/8B4513/ffffff?text=Logo" alt="Logo Cantinho de Outono" class="rounded-lg">
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
+            </a>
+            <nav class="flex items-center space-x-6">
+                <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Produtos</a>
+                <a href="sobre-nos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Sobre Nós</a>
+                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
+                <div class="cart-icon-container">
+                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                        <!-- Ícone de carrinho SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5.4M7 13l-2.293 2.293c-.63.63-.182 1.953.693 1.953H17M17 17a2 2 0 100 4 2 2 0 000-4zm-4 0a2 2 0 100 4 2 2 0 000-4z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
+                    <span id="cart-item-count" class="cart-item-count">0</span>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
-    <main class="mt-8 container mx-auto px-4">
-        <section id="about">
-            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center fade-in">Sobre a Mermaid</h1>
-            <div class="max-w-4xl mx-auto text-center fade-in">
-                <p class="text-lg text-gray-600 mb-4">A Mermaid nasceu da paixão pelo aconchego e pelo design de interiores. Criamos produtos de decoração exclusivos, focados na qualidade dos materiais e no conforto, para ajudar a transformar a sua casa num verdadeiro refúgio de outono.</p>
-                <p class="text-lg text-gray-600 mb-4">O nosso compromisso é com a sustentabilidade e a produção ética, garantindo que as nossas peças não são apenas bonitas, mas também amigas do ambiente.</p>
-                <p class="text-lg text-gray-600 mb-4">Acreditamos que a casa é o nosso porto seguro, e cada detalhe faz a diferença. Junte-se à nossa comunidade e descubra como o aconchego pode ser elegante!</p>
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 fade-in">
+            <h1 class="text-4xl font-extrabold text-[#8B4513] text-center mb-6">A Nossa História</h1>
+            <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
+                <img src="https://placehold.co/400x400/A0522D/ffffff?text=Equipa" alt="Fotografia da equipa Cantinho de Outono" class="w-full lg:w-1/2 rounded-xl mb-6 lg:mb-0">
+                <div>
+                    <p class="text-lg text-gray-600 mb-4">Acreditamos que o lar é o nosso porto de abrigo, especialmente nos dias mais frios. A Cantinho de Outono nasceu da paixão por criar espaços que inspiram calma, conforto e bem-estar.</p>
+                    <p class="text-lg text-gray-600 mb-4">Dedicamo-nos a selecionar e a criar os produtos de decoração exclusivos, focados na qualidade dos materiais e no conforto, para ajudar a transformar a sua casa num verdadeiro refúgio de outono.</p>
+                    <p class="text-lg text-gray-600 mb-4">O nosso compromisso é com a sustentabilidade e a produção ética, garantindo que as nossas peças não são apenas bonitas, mas também amigas do ambiente.</p>
+                    <p class="text-lg text-gray-600 mb-4">Acreditamos que a casa é o nosso porto seguro, e cada detalhe faz a diferença. Junte-se à nossa comunidade e descubra como o aconchego pode ser elegante!</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Mermaid. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
     
-    <script>
+    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+            <p id="message-text" class="text-lg font-semibold mb-4"></p>
+            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId;
+        const cartItemCountElement = document.getElementById('cart-item-count');
+
+        async function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Utilizador autenticado com ID:", userId);
+                        listenToCart();
+                    } else {
+                        userId = null;
+                        console.log("Usuário não autenticado.");
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao configurar o Firebase:", error);
+            }
+        }
+        
+        function listenToCart() {
+            if (!userId) {
+                console.error("Não há userId. Não é possível ouvir o carrinho.");
+                return;
+            }
+            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
+            onSnapshot(userCartRef, (snapshot) => {
+                let itemCount = 0;
+                snapshot.forEach(doc => {
+                    itemCount += doc.data().quantity;
+                });
+                cartItemCountElement.textContent = itemCount;
+            }, (error) => {
+                console.error("Erro ao ouvir o carrinho:", error);
+            });
+        }
+
+        // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
-        const appearOptions = { threshold: 0.5 };
+        const appearOptions = { threshold: 0.25 };
         const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -94,6 +178,8 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
+        
+        initFirebase();
     </script>
 </body>
 </html>
