@@ -141,18 +141,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartIconLink = document.querySelector('.cart-icon-container a');
     const cartPreview = document.getElementById('cart-preview');
     if (cartIconLink && cartPreview) {
-        cartIconLink.addEventListener('mouseenter', () => {
+        // Mostra/esconde a pré-visualização ao clicar no ícone do carrinho
+        cartIconLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Impede a navegação
             renderCartPreview();
-            cartPreview.classList.remove('hidden');
+            cartPreview.classList.toggle('hidden');
         });
-        cartIconLink.addEventListener('mouseleave', (e) => {
-            // Verificar se o mouse saiu para o pop-up
-            if (!cartPreview.contains(e.relatedTarget)) {
-                 cartPreview.classList.add('hidden');
+
+        // Esconde a pré-visualização ao clicar em qualquer lugar fora dela
+        document.addEventListener('click', (e) => {
+            if (!cartPreview.contains(e.target) && !cartIconLink.contains(e.target)) {
+                cartPreview.classList.add('hidden');
             }
-        });
-        cartPreview.addEventListener('mouseleave', () => {
-            cartPreview.classList.add('hidden');
         });
     }
 });
