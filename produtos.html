@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | Mermaid</title>
+    <meta name="description" content="Explore a coleção completa de produtos de outono da Mermaid, incluindo canecas, velas aromáticas, cobertores aconchegantes e decorações para casa.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fef9f5;
+        }
+        .btn-primary {
+            background-color: #8B4513;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #A0522D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Animações de scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#fef9f5] text-gray-800">
+
+    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html"><img src="https://placehold.co/120x40/d2a48c/8B4513?text=Mermaid" alt="Mermaid - Logotipo da Loja" class="h-10"></a>
+            <nav>
+                <ul class="flex space-x-6 text-gray-600 font-medium">
+                    <li><a href="index.html" class="hover:text-[#8B4513] transition-colors">Início</a></li>
+                    <li><a href="produtos.html" class="hover:text-[#8B4513] transition-colors">Produtos</a></li>
+                    <li><a href="sobre-nos.html" class="hover:text-[#8B4513] transition-colors">Sobre Nós</a></li>
+                    <li><a href="contactos.html" class="hover:text-[#8B4513] transition-colors">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5.4M7 13l-2.293 2.293c-.63.63-.182 1.953.693 1.953H17M17 17a2 2 0 100 4 2 2 0 000-4zm-4 0a2 2 0 100 4 2 2 0 000-4z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="mt-8 container mx-auto px-4">
+        <section id="products">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center fade-in">Toda a Coleção de Outono</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/8B4513/ffffff?text=Caneca+Outono" alt="Caneca de cerâmica em tons de outono" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Caneca de Outono</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,99</span>
+                    <a href="produto-caneca.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/D2691E/ffffff?text=Vela+Maçã" alt="Vela aromática com fragrância de maçã e canela" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Vela de Maçã e Canela</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 22,50</span>
+                    <a href="produto-vela.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
+                    <a href="produto-cobertor.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/CD853F/ffffff?text=Almofada" alt="Almofada decorativa em veludo cor de abóbora" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Almofada Decorativa</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 29,99</span>
+                    <a href="produto-almofada.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/DEB887/ffffff?text=Kit+Chá" alt="Kit de chá com caixa de madeira e seleção de chás de ervas" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Kit de Chá de Ervas</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 18,99</span>
+                    <a href="produto-cha.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/F4A460/ffffff?text=Quadro" alt='Quadro com ilustrações de folhas caídas de outono' class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Quadro "Folhas Caídas"</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 35,00</span>
+                    <a href="produto-quadro.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#8B4513] text-white py-8 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Mermaid. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <script>
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = { threshold: 0.5 };
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
