@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -24,35 +23,29 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .stripe-errors {
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-        }
-        #checkout-button.btn-loading {
-            background-color: #A0522D;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        #message-box {
-            animation: fadeIn 0.3s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
 
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-bold text-[#8B4513]">Mermaid</a>
-            <nav>
-                <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 mr-6">Produtos</a>
-                <a href="carrinho.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Carrinho</a>
-                <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 ml-6">Sobre Nós</a>
-                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300 ml-6">Contactos</a>
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
+                <span class="text-3xl font-bold text-[#8B4513]">Mermaid</span>
+            </a>
+            <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
+                <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Produtos</a>
+                <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
+                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
+                <div class="cart-icon-container">
+                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </a>
+                    <span id="cart-item-count" class="cart-item-count">0</span>
+                </div>
             </nav>
         </div>
     </header>
@@ -91,12 +84,6 @@
                                 <textarea id="address" name="address" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
                             </div>
                         </div>
-                        <div class="mt-6">
-                            <label for="payment-card" class="block text-sm font-medium text-gray-700">Dados do Cartão</label>
-                            <div id="card-element" class="mt-1">
-                                </div>
-                            <div id="card-errors" role="alert" class="stripe-errors"></div>
-                        </div>
                         <div class="mt-8 text-center">
                             <button type="submit" id="checkout-button" class="btn-primary text-white font-bold py-3 px-8 rounded-full">
                                 Pagar e Finalizar
@@ -114,79 +101,20 @@
         </div>
     </footer>
 
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
     <script>
-        let cartItemsContainer, cartTotalElement;
-        const stripePublicKey = 'pk_test_51O2f1hL2f2p3U1P1k4v3w5x6y7z8a9b0c1d2e3f4g5h6i7j8k9l0m1n2o3p4q5r';
-        const stripe = Stripe(stripePublicKey);
-        const cartItemCountElement = document.getElementById('cart-item-count');
-
         document.addEventListener('DOMContentLoaded', () => {
-            cartItemsContainer = document.getElementById('cart-items');
-            cartTotalElement = document.getElementById('cart-total');
-
-            // Carregar o carrinho quando a página é carregada
-            loadCart();
+            renderCart();
         });
 
-        // Simula o carregamento do carrinho (deve ser ajustado para a sua lógica de back-end)
-        function loadCart() {
-            let total = 0;
-            cartItemsContainer.innerHTML = '';
-            // Exemplo de dados de um item do carrinho
-            const exampleItem = {
-                name: "Caneca de Cerâmica",
-                price: 19.99,
-                quantity: 1
-            };
-            total += exampleItem.price * exampleItem.quantity;
-
-            const itemHTML = `
-                <div class="flex items-center justify-between border-b pb-4">
-                    <div class="flex items-center">
-                        <img src="https://placehold.co/80x80/D2B48C/ffffff?text=Item" alt="${exampleItem.name}" class="rounded-lg w-20 h-20 object-cover mr-4">
-                        <div>
-                            <h3 class="font-semibold">${exampleItem.name}</h3>
-                            <p class="text-sm text-gray-500">Quantidade: ${exampleItem.quantity}</p>
-                        </div>
-                    </div>
-                    <span class="font-bold text-[#8B4513]">€${(exampleItem.price * exampleItem.quantity).toFixed(2)}</span>
-                </div>
-            `;
-            cartItemsContainer.innerHTML = itemHTML;
-            cartTotalElement.textContent = `€${total.toFixed(2)}`;
-        }
-
-        // Simula o Stripe e o pagamento
+        // Simulação do pagamento
         const checkoutForm = document.getElementById('checkout-form');
-        const checkoutButton = document.getElementById('checkout-button');
-        const cardErrors = document.getElementById('card-errors');
-        const cardElement = document.getElementById('card-element');
-
-        if (checkoutForm && checkoutButton) {
-            checkoutForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                checkoutButton.disabled = true;
-                checkoutButton.textContent = 'A processar...';
-
-                // Simulação de chamada para o back-end
-                setTimeout(() => {
-                    const paymentSuccessful = true;
-                    if (paymentSuccessful) {
-                        cardErrors.textContent = '';
-                        alert('Pagamento efetuado com sucesso! O seu pedido será processado em breve. Obrigado pela sua compra!');
-                        checkoutForm.reset();
-                        // Limpar o carrinho (simulação)
-                        cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center">Seu carrinho está vazio.</p>`;
-                        cartTotalElement.textContent = '€0,00';
-                    } else {
-                        cardErrors.textContent = "Ocorreu um erro no pagamento. Por favor, tente novamente.";
-                    }
-                    checkoutButton.disabled = false;
-                    checkoutButton.textContent = 'Pagar e Finalizar';
-                }, 2000); // Simula um atraso de 2 segundos
-            });
-        }
+        checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Pagamento simulado com sucesso! O seu pedido será processado em breve.');
+            localStorage.removeItem('cart'); // Simula a limpeza do carrinho após a compra
+            window.location.reload(); // Recarrega a página para mostrar o carrinho vazio
+        });
     </script>
 </body>
 </html>
