@@ -72,45 +72,45 @@
                 <div class="relative">
                     <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5.4M7 13l-2.293 2.293c-.63.63-.182 1.953.693 1.953H17M17 17a2 2 0 100 4 2 2 0 000-4zm-4 0a2 2 0 100 4 2 2 0 000-4z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
+                        <span id="cart-item-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">0</span>
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="mt-8 container mx-auto px-4">
-        <section id="home" class="page-content">
-            <div class="hero-section text-center py-20 rounded-xl mb-12">
-                <h1 class="text-5xl font-extrabold text-[#fff] mb-4">Aconchegue-se para o Outono</h1>
-                <p class="text-xl font-medium text-gray-100 mb-8">Descubra a nossa nova coleção de decoração para tornar a sua casa mais acolhedora.</p>
-                <a href="produtos.html" class="btn-primary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all">Ver Coleção</a>
-            </div>
+    <main class="container mx-auto px-4 py-8">
+        <section class="hero-section rounded-3xl p-12 text-white text-center shadow-lg animated-gradient fade-in">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-md">Aconchego e Decoração de Outono</h1>
+            <p class="text-lg md:text-xl mb-8 font-light">Transforme a sua casa num refúgio acolhedor com a nossa coleção.</p>
+            <a href="produtos.html" class="bg-white text-[#8B4513] font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105">Explorar Produtos</a>
+        </section>
 
-            <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center fade-in">Os nossos destaques</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section class="mt-16 fade-in">
+            <h2 class="text-4xl font-extrabold text-[#8B4513] text-center mb-12">Produtos em Destaque</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/8B4513/ffffff?text=Caneca+Outono" alt="Caneca de cerâmica em tons de outono" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-semibold mb-2">Caneca de Outono</h3>
-                    <p class="text-gray-600 mb-4">Perfeita para o seu chá ou café em dias frios.</p>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,99</span>
-                    <a href="produto-caneca.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca artesanal de cerâmica" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Caneca de Cerâmica</h3>
+                    <p class="text-gray-600 mb-4">Perfeita para o seu chocolate quente ou chá.</p>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 19,99</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="caneca-index" data-name="Caneca de Cerâmica" data-price="19.99" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">Adicionar ao Carrinho</button>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/D2691E/ffffff?text=Vela+Maçã" alt="Vela aromática com fragrância de maçã e canela" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-semibold mb-2">Vela de Maçã e Canela</h3>
-                    <p class="text-gray-600 mb-4">O aroma perfeito para o aconchego da sua casa.</p>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 22,50</span>
-                    <a href="produto-vela.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Vela" alt="Vela aromática de canela" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Vela Aromática</h3>
+                    <p class="text-gray-600 mb-4">Fragrância de outono para o seu lar.</p>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,50</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="vela-index" data-name="Vela Aromática" data-price="15.50" data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Vela">Adicionar ao Carrinho</button>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
+                    <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã" class="w-full rounded-lg mb-4">
                     <h3 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h3>
                     <p class="text-gray-600 mb-4">A peça essencial para noites frias.</p>
                     <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
-                    <a href="produto-cobertor.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="cobertor-index" data-name="Cobertor Aconchegante" data-price="79.99" data-image="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor">Adicionar ao Carrinho</button>
                 </div>
             </div>
         </section>
@@ -122,9 +122,11 @@
         </div>
     </footer>
 
+    <script type="module" src="script.js"></script>
     <script>
+        // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
-        const appearOptions = { threshold: 0.5 };
+        const appearOptions = { threshold: 0.25 };
         const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -138,6 +140,20 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
+        });
+
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    id: button.dataset.id,
+                    name: button.dataset.name,
+                    price: button.dataset.price,
+                    image: button.dataset.image
+                };
+                addToCart(product);
+            });
         });
     </script>
 </body>
