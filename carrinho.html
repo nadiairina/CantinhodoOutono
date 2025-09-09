@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras | Cantinho do Outono</title>
+    <title>Carrinho de Compras | Cantinho de Outono</title>
     <meta name="description" content="Reveja os itens no seu carrinho de compras e finalize a sua encomenda.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
+            color: #4A2B1A;
         }
         .btn-primary {
             background-color: #8B4513;
@@ -39,16 +40,13 @@
             font-weight: bold;
             line-height: 1;
         }
-        #cart-preview {
-            position: absolute;
-            top: 40px;
-            right: 0;
-            width: 300px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            padding: 1rem;
-            z-index: 50;
+        .payment-option {
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .payment-option.selected {
+            border-color: #8B4513;
+            background-color: #fffaf0;
         }
         .hidden {
             display: none;
@@ -60,8 +58,7 @@
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho do Outono/span>
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
             </a>
             <nav class="flex items-center space-x-6">
                 <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
@@ -69,26 +66,20 @@
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="#" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">
+                    <a href="carrinho.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
-                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
-                        <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
-                        <div class="flex justify-center mt-4">
-                            <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
-                        </div>
-                    </div>
                 </div>
             </nav>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-            <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Checkout</h1>
+        <section class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+            <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Seu Carrinho de Compras</h1>
             
             <div id="success-message" class="hidden text-center py-16">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
@@ -101,63 +92,76 @@
 
             <div id="checkout-content" class="lg:grid lg:grid-cols-2 lg:gap-12">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Seu Pedido</h2>
-                    <div id="cart-items" class="space-y-4"></div>
-                    <div class="border-t border-gray-200 mt-6 pt-4">
-                        <div class="flex justify-between items-center text-gray-700 font-semibold text-lg">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Resumo do Pedido</h2>
+                    <div id="cart-items" class="space-y-6">
+                        </div>
+                    <div class="border-t border-gray-200 mt-6 pt-4 space-y-2">
+                        <div class="flex justify-between items-center text-gray-600">
+                            <span>Subtotal:</span>
+                            <span id="subtotal" class="font-semibold">€0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-600">
+                            <span>Envio:</span>
+                            <span id="shipping" class="font-semibold">€5,00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-800 font-bold text-lg border-t pt-2">
                             <span>Total:</span>
                             <span id="cart-total" class="text-[#8B4513]">€0,00</span>
                         </div>
                     </div>
+                    <div id="empty-cart-message" class="hidden text-center py-10">
+                        <p class="text-gray-500 text-lg">O seu carrinho está vazio.</p>
+                        <a href="produtos.html" class="inline-block mt-4 btn-primary text-white font-bold py-2 px-6 rounded-full">Ver Produtos</a>
+                    </div>
                 </div>
 
                 <div class="mt-10 lg:mt-0">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados de Entrega</h2>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados de Entrega e Pagamento</h2>
                     <form id="checkout-form">
-                        <div class="space-y-4">
+                        <div class="space-y-4 mb-8">
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700">Nome Completo</label>
-                                <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                             </div>
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                             </div>
                             <div>
                                 <label for="phone" class="block text-sm font-medium text-gray-700">Número de Telemóvel</label>
-                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
+                            </div>
+                            <div>
+                                <label for="street" class="block text-sm font-medium text-gray-700">Rua</label>
+                                <input type="text" id="street" name="street" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label for="street" class="block text-sm font-medium text-gray-700">Rua</label>
-                                    <input type="text" id="street" name="street" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                    <label for="number" class="block text-sm font-medium text-gray-700">Número</label>
+                                    <input type="text" id="number" name="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                                 </div>
                                 <div>
-                                    <label for="number" class="block text-sm font-medium text-gray-700">Número</label>
-                                    <input type="text" id="number" name="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                    <label for="floor" class="block text-sm font-medium text-gray-700">Andar / Apartamento (opcional)</label>
+                                    <input type="text" id="floor" name="floor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50">
                                 </div>
-                            </div>
-                            <div>
-                                <label for="floor" class="block text-sm font-medium text-gray-700">Andar / Apartamento (opcional)</label>
-                                <input type="text" id="floor" name="floor" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="postal_code" class="block text-sm font-medium text-gray-700">Código Postal</label>
-                                    <input type="text" id="postal_code" name="postal_code" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                    <input type="text" id="postal_code" name="postal_code" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                                 </div>
                                 <div>
                                     <label for="city" class="block text-sm font-medium text-gray-700">Cidade</label>
-                                    <input type="text" id="city" name="city" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                    <input type="text" id="city" name="city" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#D2A48C] focus:ring focus:ring-[#D2A48C] focus:ring-opacity-50" required>
                                 </div>
                             </div>
                         </div>
 
-                        <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-6">Método de Pagamento</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Método de Pagamento</h2>
                         <div class="space-y-4">
-                            <div class="border p-4 rounded-md transition-colors" data-payment-option="card">
+                            <div class="border p-4 rounded-lg cursor-pointer payment-option selected" data-payment-option="card">
                                 <div class="flex items-center">
-                                    <input id="payment_card" name="payment_method" type="radio" class="focus:ring-[#8B4513] h-4 w-4 text-[#8B4513] border-gray-300" checked>
+                                    <input id="payment_card" name="payment_method" type="radio" class="h-4 w-4 text-[#8B4513] focus:ring-[#8B4513] border-gray-300" checked>
                                     <label for="payment_card" class="ml-3 block text-sm font-medium text-gray-700">
                                         Cartão de Crédito / Débito
                                     </label>
@@ -180,9 +184,9 @@
                                 </div>
                             </div>
                             
-                            <div class="border p-4 rounded-md" data-payment-option="mbway">
+                            <div class="border p-4 rounded-lg cursor-pointer payment-option" data-payment-option="mbway">
                                 <div class="flex items-center">
-                                    <input id="payment_mbway" name="payment_method" type="radio" class="focus:ring-[#8B4513] h-4 w-4 text-[#8B4513] border-gray-300">
+                                    <input id="payment_mbway" name="payment_method" type="radio" class="h-4 w-4 text-[#8B4513] focus:ring-[#8B4513] border-gray-300">
                                     <label for="payment_mbway" class="ml-3 block text-sm font-medium text-gray-700">
                                         MBWay
                                     </label>
@@ -194,10 +198,10 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="border p-4 rounded-md" data-payment-option="transfer">
+    
+                            <div class="border p-4 rounded-lg cursor-pointer payment-option" data-payment-option="transfer">
                                 <div class="flex items-center">
-                                    <input id="payment_transfer" name="payment_method" type="radio" class="focus:ring-[#8B4513] h-4 w-4 text-[#8B4513] border-gray-300">
+                                    <input id="payment_transfer" name="payment_method" type="radio" class="h-4 w-4 text-[#8B4513] focus:ring-[#8B4513] border-gray-300">
                                     <label for="payment_transfer" class="ml-3 block text-sm font-medium text-gray-700">
                                         Transferência Bancária
                                     </label>
@@ -207,7 +211,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="mt-8 text-center">
                             <button type="submit" id="checkout-button" class="btn-primary text-white font-bold py-3 px-8 rounded-full">
                                 Pagar e Finalizar
@@ -221,7 +225,7 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Cantinho do Outono. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -229,9 +233,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             renderCart();
+            updateTotals();
 
-            // Lógica para mostrar/esconder detalhes de pagamento
+            // Lógica para mostrar/esconder detalhes de pagamento e destacar a opção selecionada
             const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
+            const paymentContainers = document.querySelectorAll('.payment-option');
             const detailsContainers = {
                 card: document.getElementById('card-details'),
                 mbway: document.getElementById('mbway-details'),
@@ -241,6 +247,9 @@
             paymentOptions.forEach(option => {
                 option.addEventListener('change', (e) => {
                     const selectedMethod = e.target.id.split('_')[1];
+                    paymentContainers.forEach(container => container.classList.remove('selected'));
+                    document.querySelector(`[data-payment-option="${selectedMethod}"]`).classList.add('selected');
+
                     for (const method in detailsContainers) {
                         if (method === selectedMethod) {
                             detailsContainers[method].classList.remove('hidden');
@@ -250,25 +259,143 @@
                     }
                 });
             });
+
+            // Lógica de simulação do pagamento
+            const checkoutForm = document.getElementById('checkout-form');
+            const checkoutContent = document.getElementById('checkout-content');
+            const successMessage = document.getElementById('success-message');
+
+            checkoutForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                setTimeout(() => {
+                    checkoutContent.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+
+                    localStorage.removeItem('cart');
+                    updateCartCount();
+                }, 1000);
+            });
         });
 
-        // Lógica de simulação do pagamento
-        const checkoutForm = document.getElementById('checkout-form');
-        const checkoutContent = document.getElementById('checkout-content');
-        const successMessage = document.getElementById('success-message');
+        const SHIPPING_COST = 5.00;
 
-        checkoutForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        // Funções para gerir o carrinho
+        function getCart() {
+            const cart = localStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+        
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            updateTotals();
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartItemCountElement = document.getElementById('cart-item-count');
+            if (cartItemCountElement) {
+                cartItemCountElement.textContent = itemCount;
+            }
+        }
+
+        function updateQuantity(productId, change) {
+            const cart = getCart();
+            const product = cart.find(item => item.id === productId);
+            if (product) {
+                product.quantity += change;
+                if (product.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    saveCart(cart);
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            const cart = getCart();
+            const updatedCart = cart.filter(item => item.id !== productId);
+            saveCart(updatedCart);
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const checkoutButton = document.getElementById('checkout-button');
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                document.getElementById('checkout-content').classList.add('hidden');
+                return;
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                document.getElementById('checkout-content').classList.remove('hidden');
+            }
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('flex', 'items-center', 'justify-between', 'border-b', 'border-gray-200', 'py-4');
+                itemElement.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                        <div>
+                            <h3 class="font-semibold text-lg">${item.name}</h3>
+                            <p class="text-sm text-gray-600">Preço: €${item.price.toFixed(2)}</p>
+                            <div class="flex items-center mt-2">
+                                <button class="quantity-btn decrease-btn bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center" data-id="${item.id}">-</button>
+                                <span class="mx-3">${item.quantity}</span>
+                                <button class="quantity-btn increase-btn bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center" data-id="${item.id}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="font-bold text-[#8B4513] text-lg">€${(item.price * item.quantity).toFixed(2)}</span>
+                        <button class="remove-from-cart-btn text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            document.querySelectorAll('.increase-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    updateQuantity(id, 1);
+                });
+            });
+
+            document.querySelectorAll('.decrease-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    updateQuantity(id, -1);
+                });
+            });
+
+            document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = e.target.closest('button').dataset.id;
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        function updateTotals() {
+            const cart = getCart();
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const total = subtotal + SHIPPING_COST;
             
-            setTimeout(() => {
-                checkoutContent.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-
-                localStorage.removeItem('cart');
-                updateCartCount();
-            }, 1000);
-        });
+            document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
-
