@@ -53,20 +53,19 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/8B4513/ffffff?text=Logo" alt="Logo Cantinho de Outono" class="rounded-lg">
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
+                <span class="text-3xl font-bold text-[#8B4513]">Mermaid</span>
             </a>
             <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
                 <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Produtos</a>
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
                     <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
-                        <!-- Ícone de carrinho SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -79,31 +78,45 @@
 
     <main class="container mx-auto px-4 py-8">
         <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 fade-in">
-            <h1 class="text-4xl font-extrabold text-[#8B4513] text-center mb-8">Entre em Contacto</h1>
-            <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
-                <div>
-                    <img src="https://placehold.co/500x300/F4A460/ffffff?text=Contacto" alt="Imagem ilustrativa de uma caixa de correio com folhas de outono" class="rounded-lg shadow-md mb-6 lg:mb-0">
+            <h1 class="text-4xl font-extrabold text-[#8B4513] mb-8 text-center">Entre em Contacto Connosco</h1>
+            <div class="flex flex-col lg:flex-row lg:space-x-8">
+                <div class="lg:w-1/2">
+                    <p class="text-gray-600 mb-6">Estamos aqui para ajudar com qualquer questão sobre os nossos produtos, a sua encomenda ou a nossa loja. Pode contactar-nos através do formulário abaixo ou pelas nossas redes sociais.</p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span><a href="mailto:info@cantinhodeoutono.pt" class="text-gray-600 hover:underline">info@cantinhodeoutono.pt</a></span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Rua das Folhas Caídas, 123, 4560-789 Outono, Portugal</span>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-lg text-gray-600 mb-6">
-                        Tem alguma questão, sugestão ou apenas quer dizer olá? Adoraríamos ouvir de si! Preencha o formulário abaixo e entraremos em contacto o mais breve possível.
-                    </p>
-                    <form id="contact-form" action="#" method="POST">
+                <div class="lg:w-1/2 mt-8 lg:mt-0">
+                    <form id="contactForm" class="bg-gray-100 p-6 rounded-xl shadow-inner">
                         <div class="mb-4">
-                            <label for="contact-name" class="block text-sm font-medium text-gray-700">Seu Nome</label>
-                            <input type="text" id="contact-name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nome Completo</label>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
                         <div class="mb-4">
-                            <label for="contact-email" class="block text-sm font-medium text-gray-700">Seu Email</label>
-                            <input type="email" id="contact-email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
-                        <div class="mb-6">
-                            <label for="contact-message" class="block text-sm font-medium text-gray-700">Mensagem</label>
-                            <textarea id="contact-message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Assunto</label>
+                            <input type="text" id="subject" name="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn-primary text-white font-bold py-3 px-8 rounded-full">Enviar Mensagem</button>
+                        <div class="mb-4">
+                            <label for="message" class="block text-sm font-medium text-gray-700">Mensagem</label>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
                         </div>
+                        <button type="submit" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full">Enviar Mensagem</button>
                     </form>
                 </div>
             </div>
@@ -115,70 +128,11 @@
             <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
-    
-    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
-            <p id="message-text" class="text-lg font-semibold mb-4"></p>
-            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
-        </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth, userId;
+    <script type="module" src="script.js"></script>
+    <script>
         const cartItemCountElement = document.getElementById('cart-item-count');
 
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Utilizador autenticado com ID:", userId);
-                        listenToCart();
-                    } else {
-                        userId = null;
-                        console.log("Usuário não autenticado.");
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao configurar o Firebase:", error);
-            }
-        }
-        
-        function listenToCart() {
-            if (!userId) {
-                console.error("Não há userId. Não é possível ouvir o carrinho.");
-                return;
-            }
-            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
-            onSnapshot(userCartRef, (snapshot) => {
-                let itemCount = 0;
-                snapshot.forEach(doc => {
-                    itemCount += doc.data().quantity;
-                });
-                cartItemCountElement.textContent = itemCount;
-            }, (error) => {
-                console.error("Erro ao ouvir o carrinho:", error);
-            });
-        }
-        
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
         const appearOptions = { threshold: 0.25 };
@@ -197,7 +151,12 @@
             appearOnScroll.observe(fader);
         });
 
-        initFirebase();
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('A sua mensagem foi enviada com sucesso! Em breve entraremos em contacto.');
+            contactForm.reset();
+        });
     </script>
 </body>
 </html>
