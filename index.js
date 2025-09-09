@@ -1,9 +1,7 @@
 const functions = require("firebase-functions");
 const stripe = require("stripe")(functions.config().stripe.secret);
 
-// AQUI: Mudei a função para `onCall` para forçar o deploy
 exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
-    // AQUI: Adicionei um console.log para forçar uma mudança detectável
     console.log("Recebendo pedido para criar PaymentIntent");
 
     const { items } = data;
