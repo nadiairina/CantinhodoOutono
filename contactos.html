@@ -13,6 +13,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
+            color: #4A2B1A;
         }
         .btn-primary {
             background-color: #8B4513;
@@ -23,7 +24,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        /* Animações de scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -65,13 +65,12 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-[#fef9f5]">
 
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho do Outono</span>
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
             </a>
             <nav class="flex items-center space-x-6">
                 <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
@@ -79,13 +78,13 @@
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="#" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <a href="carrinho.html" id="cart-icon" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
-                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
+                    <div id="cart-preview" class="hidden">
                         <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
                         <div class="flex justify-center mt-4">
                             <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
@@ -97,51 +96,68 @@
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto text-center bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-            <h1 class="text-5xl font-extrabold text-[#8B4513] mb-6 fade-in">Fale Connosco</h1>
-            <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto fade-in">
+        <section class="max-w-6xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl fade-in">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#8B4513] text-center mb-6">Fale Connosco</h1>
+            <p class="text-gray-700 text-lg text-center mb-12 max-w-2xl mx-auto">
                 Estamos sempre disponíveis para responder às suas questões. Use o formulário abaixo ou os nossos contactos diretos.
             </p>
-
-            <div class="grid md:grid-cols-2 gap-12 text-left">
-                <div class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-12 items-start text-left">
+                <div class="space-y-8 fade-in">
                     <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Morada</h3>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-800">Morada</h3>
+                        </div>
                         <p class="text-gray-600">
                             Rua das Flores, 123<br>
                             1200-123 Lisboa<br>
                             Portugal
                         </p>
                     </div>
+
                     <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-6 9h3a2 2 0 002-2v-3a2 2 0 00-2-2h-3m-6 0h-3a2 2 0 00-2 2v3a2 2 0 002 2h3" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-800">Email</h3>
+                        </div>
                         <p class="text-gray-600">
-                            <a href="mailto:geral@Cantinho do Outono.pt" class="text-[#8B4513] hover:underline">geral@Cantinho do Outono.pt</a>
+                            <a href="mailto:geral@cantinhodeoutono.pt" class="text-[#8B4513] hover:underline">geral@cantinhodeoutono.pt</a>
                         </p>
                     </div>
+
                     <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Telefone</h3>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#8B4513]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.26.904a11.97 11.97 0 005.592 5.592l.904-2.26a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-800">Telefone</h3>
+                        </div>
                         <p class="text-gray-600">+351 912 345 678</p>
                     </div>
                 </div>
 
-                <div>
+                <div class="fade-in">
                     <h2 class="text-3xl font-bold text-gray-800 mb-6">Envie-nos uma Mensagem</h2>
-                    <form action="#" method="POST" class="space-y-4">
+                    <form action="#" method="POST" class="space-y-6">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
-                            <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50" required>
                         </div>
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50" required>
                         </div>
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Mensagem</label>
-                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50" required></textarea>
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Enviar Mensagem</button>
+                            <button type="submit" class="btn-primary text-white font-bold py-3 px-8 rounded-full">Enviar Mensagem</button>
                         </div>
                     </form>
                 </div>
@@ -151,7 +167,7 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Cantinho do Outono. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
 
