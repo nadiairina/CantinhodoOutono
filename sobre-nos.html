@@ -53,20 +53,19 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/8B4513/ffffff?text=Logo" alt="Logo Cantinho de Outono" class="rounded-lg">
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
+                <span class="text-3xl font-bold text-[#8B4513]">Mermaid</span>
             </a>
             <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
                 <a href="produtos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Produtos</a>
                 <a href="sobre-nos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
                     <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
-                        <!-- Ícone de carrinho SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -78,16 +77,15 @@
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 fade-in">
-            <h1 class="text-4xl font-extrabold text-[#8B4513] text-center mb-6">A Nossa História</h1>
-            <div class="flex flex-col lg:flex-row items-center lg:space-x-8">
-                <img src="https://placehold.co/400x400/A0522D/ffffff?text=Equipa" alt="Fotografia da equipa Cantinho de Outono" class="w-full lg:w-1/2 rounded-xl mb-6 lg:mb-0">
-                <div>
-                    <p class="text-lg text-gray-600 mb-4">Acreditamos que o lar é o nosso porto de abrigo, especialmente nos dias mais frios. A Cantinho de Outono nasceu da paixão por criar espaços que inspiram calma, conforto e bem-estar.</p>
-                    <p class="text-lg text-gray-600 mb-4">Dedicamo-nos a selecionar e a criar os produtos de decoração exclusivos, focados na qualidade dos materiais e no conforto, para ajudar a transformar a sua casa num verdadeiro refúgio de outono.</p>
-                    <p class="text-lg text-gray-600 mb-4">O nosso compromisso é com a sustentabilidade e a produção ética, garantindo que as nossas peças não são apenas bonitas, mas também amigas do ambiente.</p>
-                    <p class="text-lg text-gray-600 mb-4">Acreditamos que a casa é o nosso porto seguro, e cada detalhe faz a diferença. Junte-se à nossa comunidade e descubra como o aconchego pode ser elegante!</p>
-                </div>
+        <section class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 flex flex-col lg:flex-row items-center lg:space-x-8 fade-in">
+            <div class="lg:w-1/2">
+                <img src="https://placehold.co/600x400/D2B48C/ffffff?text=Nossa+História" alt="Ilustração da história da loja" class="rounded-2xl shadow-md">
+            </div>
+            <div class="lg:w-1/2 mt-8 lg:mt-0">
+                <h1 class="text-4xl font-extrabold text-[#8B4513] mb-4">A Nossa História</h1>
+                <p class="text-gray-600 mb-4">A Cantinho de Outono nasceu da paixão pela estação mais acolhedora do ano. Começámos com o simples desejo de criar um espaço online onde as pessoas pudessem encontrar produtos que transformassem as suas casas em refúgios calorosos e convidativos. Acreditamos que a beleza está nos pequenos detalhes e na qualidade dos materiais, por isso cada produto na nossa loja é cuidadosamente selecionado.</p>
+                <h2 class="text-3xl font-bold text-[#8B4513] mt-8 mb-4">A Nossa Missão</h2>
+                <p class="text-gray-600">A nossa missão é oferecer produtos que não só embelezam o seu espaço, mas que também trazem conforto e alegria. Comprometemo-nos com a sustentabilidade e com a ética na produção. Trabalhamos com artesãos e fornecedores que partilham os nossos valores, garantindo que cada peça é feita com carinho e respeito pelo ambiente. Esperamos que, ao explorar a nossa loja, se sinta tão em casa como nós.</p>
             </div>
         </section>
     </main>
@@ -97,69 +95,10 @@
             <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
-    
-    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
-            <p id="message-text" class="text-lg font-semibold mb-4"></p>
-            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
-        </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth, userId;
+    <script type="module" src="script.js"></script>
+    <script>
         const cartItemCountElement = document.getElementById('cart-item-count');
-
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Utilizador autenticado com ID:", userId);
-                        listenToCart();
-                    } else {
-                        userId = null;
-                        console.log("Usuário não autenticado.");
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao configurar o Firebase:", error);
-            }
-        }
-        
-        function listenToCart() {
-            if (!userId) {
-                console.error("Não há userId. Não é possível ouvir o carrinho.");
-                return;
-            }
-            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
-            onSnapshot(userCartRef, (snapshot) => {
-                let itemCount = 0;
-                snapshot.forEach(doc => {
-                    itemCount += doc.data().quantity;
-                });
-                cartItemCountElement.textContent = itemCount;
-            }, (error) => {
-                console.error("Erro ao ouvir o carrinho:", error);
-            });
-        }
 
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
@@ -178,8 +117,6 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
-        
-        initFirebase();
     </script>
 </body>
 </html>
