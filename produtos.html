@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos | Mermaid</title>
-    <meta name="description" content="Explore a coleção completa de produtos de outono da Mermaid, incluindo canecas, velas aromáticas, cobertores aconchegantes e decorações para casa.">
+    <title>Produtos | Cantinho de Outono</title>
+    <meta name="description" content="Explore a coleção completa de produtos de outono da Cantinho de Outono, incluindo canecas, velas aromáticas, cobertores aconchegantes e decorações para casa.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -30,7 +30,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Animações de scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -40,72 +39,139 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .cart-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+        .cart-item-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #EF4444;
+            color: white;
+            border-radius: 9999px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            line-height: 1;
+        }
     </style>
 </head>
-<body class="bg-[#fef9f5] text-gray-800">
+<body>
 
-    <header class="bg-white shadow-sm p-4 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html"><img src="https://placehold.co/120x40/d2a48c/8B4513?text=Mermaid" alt="Mermaid - Logotipo da Loja" class="h-10"></a>
-            <nav>
-                <ul class="flex space-x-6 text-gray-600 font-medium">
-                    <li><a href="index.html" class="hover:text-[#8B4513] transition-colors">Início</a></li>
-                    <li><a href="produtos.html" class="hover:text-[#8B4513] transition-colors">Produtos</a></li>
-                    <li><a href="sobre-nos.html" class="hover:text-[#8B4513] transition-colors">Sobre Nós</a></li>
-                    <li><a href="contactos.html" class="hover:text-[#8B4513] transition-colors">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <div class="relative">
-                    <a href="carrinho.html" class="p-2 rounded-full hover:bg-gray-200 transition-colors relative">
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/8B4513/ffffff?text=Logo" alt="Logo Cantinho de Outono" class="rounded-lg">
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
+            </a>
+            <nav class="flex items-center space-x-6">
+                <a href="produtos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Produtos</a>
+                <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
+                <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
+                <div class="cart-icon-container">
+                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                        <!-- Ícone de carrinho SVG -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5.4M7 13l-2.293 2.293c-.63.63-.182 1.953.693 1.953H17M17 17a2 2 0 100 4 2 2 0 000-4zm-4 0a2 2 0 100 4 2 2 0 000-4z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
+                    <span id="cart-item-count" class="cart-item-count">0</span>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
-    <main class="mt-8 container mx-auto px-4">
-        <section id="products">
-            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center fade-in">Toda a Coleção de Outono</h1>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <main class="container mx-auto px-4 py-8">
+        <section class="max-w-6xl mx-auto">
+            <h1 class="text-5xl font-extrabold text-[#8B4513] text-center mb-8 fade-in">Nossa Coleção de Outono</h1>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto fade-in">
+                Explore a nossa seleção de produtos artesanais e de alta qualidade, perfeitos para tornar a sua casa mais acolhedora nesta estação.
+            </p>
+            <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Produto: Caneca Artesanal -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/8B4513/ffffff?text=Caneca+Outono" alt="Caneca de cerâmica em tons de outono" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Caneca de Outono</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,99</span>
-                    <a href="produto-caneca.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca artesanal de cerâmica com design de folha de outono" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Caneca de Cerâmica</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 19,99</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="caneca" 
+                        data-name="Caneca de Cerâmica" 
+                        data-price="19.99"
+                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
+                
+                <!-- Produto: Vela Aromática -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/D2691E/ffffff?text=Vela+Maçã" alt="Vela aromática com fragrância de maçã e canela" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Vela de Maçã e Canela</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 22,50</span>
-                    <a href="produto-vela.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Vela" alt="Vela aromática com fragrância de canela e baunilha" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Vela Aromática</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,50</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="vela" 
+                        data-name="Vela Aromática" 
+                        data-price="15.50"
+                        data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Vela">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
+
+                <!-- Produto: Cobertor Aconchegante -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h2>
                     <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
-                    <a href="produto-cobertor.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="cobertor" 
+                        data-name="Cobertor Aconchegante" 
+                        data-price="79.99"
+                        data-image="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
+                
+                <!-- Produto: Almofada Decorativa -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/CD853F/ffffff?text=Almofada" alt="Almofada decorativa em veludo cor de abóbora" class="w-full rounded-lg mb-4">
+                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada" alt="Almofada decorativa em tecido de veludo castanho" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Almofada Decorativa</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 29,99</span>
-                    <a href="produto-almofada.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 25,00</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="almofada" 
+                        data-name="Almofada Decorativa" 
+                        data-price="25.00"
+                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
+
+                <!-- Produto: Difusor de Essências -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
-                    <img src="https://placehold.co/400x400/DEB887/ffffff?text=Kit+Chá" alt="Kit de chá com caixa de madeira e seleção de chás de ervas" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Kit de Chá de Ervas</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 18,99</span>
-                    <a href="produto-cha.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Difusor" alt="Difusor de essências com acabamento em madeira escura" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Difusor de Essências</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 39,00</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="difusor" 
+                        data-name="Difusor de Essências" 
+                        data-price="39.00"
+                        data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Difusor">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
+
+                <!-- Produto: Quadro "Folhas Caídas" -->
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/F4A460/ffffff?text=Quadro" alt='Quadro com ilustrações de folhas caídas de outono' class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Quadro "Folhas Caídas"</h2>
                     <span class="text-2xl font-bold text-[#8B4513]">€ 35,00</span>
-                    <a href="produto-quadro.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">Ver Detalhes</a>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="quadro" 
+                        data-name="Quadro 'Folhas Caídas'" 
+                        data-price="35.00"
+                        data-image="https://placehold.co/400x400/F4A460/ffffff?text=Quadro">
+                        Adicionar ao Carrinho
+                    </button>
                 </div>
             </div>
         </section>
@@ -113,13 +179,119 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Mermaid. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
     
-    <script>
+    <div id="message-box" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+            <p id="message-text" class="text-lg font-semibold mb-4"></p>
+            <button onclick="document.getElementById('message-box').classList.add('hidden')" class="btn-primary text-white font-bold py-2 px-6 rounded-full">Fechar</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, increment, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId;
+
+        // Elementos do DOM
+        const cartItemCountElement = document.getElementById('cart-item-count');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.classList.remove('hidden');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 3000);
+        }
+
+        async function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Utilizador autenticado com ID:", userId);
+                        listenToCart();
+                    } else {
+                        userId = null;
+                        console.log("Usuário não autenticado.");
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao configurar o Firebase:", error);
+            }
+        }
+
+        // Ouve as mudanças no carrinho em tempo real
+        function listenToCart() {
+            if (!userId) {
+                console.error("Não há userId. Não é possível ouvir o carrinho.");
+                return;
+            }
+
+            const userCartRef = collection(db, `/artifacts/${appId}/users/${userId}/cart`);
+            onSnapshot(userCartRef, (snapshot) => {
+                let itemCount = 0;
+                snapshot.forEach(doc => {
+                    itemCount += doc.data().quantity;
+                });
+                cartItemCountElement.textContent = itemCount;
+            }, (error) => {
+                console.error("Erro ao ouvir o carrinho:", error);
+            });
+        }
+
+        async function addToCart(product) {
+            if (!userId) {
+                showMessageBox("Por favor, espere enquanto a aplicação se conecta.");
+                return;
+            }
+
+            const productRef = doc(db, `/artifacts/${appId}/users/${userId}/cart`, product.id);
+
+            try {
+                const productDoc = await getDoc(productRef);
+                if (productDoc.exists()) {
+                    await setDoc(productRef, { quantity: increment(1) }, { merge: true });
+                } else {
+                    await setDoc(productRef, {
+                        id: product.id,
+                        name: product.name,
+                        price: parseFloat(product.price),
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                showMessageBox(`'${product.name}' adicionado ao carrinho!`);
+            } catch (error) {
+                console.error("Erro ao adicionar produto ao carrinho:", error);
+                showMessageBox("Ocorreu um erro. Não foi possível adicionar o produto ao carrinho.");
+            }
+        }
+
+        // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
-        const appearOptions = { threshold: 0.5 };
+        const appearOptions = { threshold: 0.25 };
         const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -134,6 +306,22 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
+
+        // Eventos dos botões "Adicionar ao Carrinho"
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    id: button.dataset.id,
+                    name: button.dataset.name,
+                    price: button.dataset.price,
+                    image: button.dataset.image
+                };
+                addToCart(product);
+            });
+        });
+
+        // Chamada inicial
+        initFirebase();
     </script>
 </body>
 </html>
