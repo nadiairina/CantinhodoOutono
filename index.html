@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início | Cantinho do Outono</title>
+    <title>Início | Cantinho de Outono</title>
     <meta name="description" content="Descubra a nossa coleção exclusiva de produtos de outono. Encontre canecas, velas, cobertores, e almofadas para transformar a sua casa num refúgio acolhedor.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,19 +13,15 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
+            color: #4A2B1A;
         }
         .hero-section {
-            background-color: #d2a48c;
-            background-image: linear-gradient(135deg, #d2a48c 0%, #b8860b 100%);
-        }
-        .animated-gradient {
-            background-size: 400% 400%;
-            animation: gradient-animation 10s ease infinite;
-        }
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://placehold.co/1920x1080/D2B48C/ffffff?text=Outono') center/cover no-repeat;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
         .btn-primary {
             background-color: #8B4513;
@@ -43,7 +39,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Animações de scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -85,13 +80,12 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-[#fef9f5]">
 
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho do Outono</span>
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
             </a>
             <nav class="flex items-center space-x-6">
                 <a href="index.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Início</a>
@@ -99,13 +93,13 @@
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="#" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <a href="carrinho.html" id="cart-icon" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
-                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
+                    <div id="cart-preview" class="hidden">
                         <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
                         <div class="flex justify-center mt-4">
                             <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
@@ -117,16 +111,42 @@
     </header>
 
     <main>
-        <section class="hero-section text-white text-center py-24 md:py-36">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animated-gradient fade-in">Aconchego em Cada Detalhe</h1>
-            <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 fade-in">
-                Mergulhe na nossa coleção exclusiva de produtos de outono. Feitos à mão para tornar a sua casa um refúgio acolhedor.
-            </p>
-            <a href="produtos.html" class="btn-primary inline-block text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl fade-in">Descobrir Coleção</a>
+        <section class="hero-section text-white text-center py-24 md:py-36 fade-in">
+            <div class="container mx-auto px-4">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-md">Aconchego em Cada Detalhe</h1>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 drop-shadow-sm">
+                    Mergulhe na nossa coleção exclusiva de produtos de outono. Feitos à mão para tornar a sua casa um refúgio acolhedor.
+                </p>
+                <a href="produtos.html" class="btn-primary inline-block text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl">Descobrir Coleção</a>
+            </div>
         </section>
 
         <section class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-extrabold text-[#8B4513] text-center mb-12 fade-in">Mais Vendidos</h2>
+            <h2 class="text-4xl font-extrabold text-[#8B4513] text-center mb-12 fade-in">Navegue pelas Categorias</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Velas+e+Aromas" alt="Velas e Aromas" class="w-full rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mt-2">Velas & Aromas</h3>
+                    <p class="text-gray-600 mb-4 text-center">Aconchego em cada fragrância.</p>
+                    <a href="produtos.html#velas" class="btn-primary inline-block text-white font-bold py-2 px-6 rounded-full mt-2">Ver Categoria</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Decoracao" alt="Decoração" class="w-full rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mt-2">Decoração</h3>
+                    <p class="text-gray-600 mb-4 text-center">Detalhes que transformam.</p>
+                    <a href="produtos.html#decoracao" class="btn-primary inline-block text-white font-bold py-2 px-6 rounded-full mt-2">Ver Categoria</a>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/A0522D/ffffff?text=Textil" alt="Têxteis" class="w-full rounded-lg mb-4">
+                    <h3 class="text-2xl font-semibold mt-2">Têxteis</h3>
+                    <p class="text-gray-600 mb-4 text-center">Conforto e calor para o seu lar.</p>
+                    <a href="produtos.html#textil" class="btn-primary inline-block text-white font-bold py-2 px-6 rounded-full mt-2">Ver Categoria</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-extrabold text-[#8B4513] text-center mb-12 fade-in">Os Nossos Mais Vendidos</h2>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca artesanal de cerâmica com design de folha de outono" class="w-full rounded-lg mb-4">
@@ -147,10 +167,10 @@
                     <p class="text-gray-600 mb-4">Crie um ambiente acolhedor e relaxante.</p>
                     <span class="text-2xl font-bold text-[#8B4513]">€ 15,50</span>
                     <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
-                        data-id="caneca-ceramica" 
-                        data-name="Caneca de Cerâmica" 
-                        data-price="19.99"
-                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">
+                        data-id="vela-aromatica" 
+                        data-name="Vela Aromática" 
+                        data-price="15.50"
+                        data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Vela">
                         Adicionar ao Carrinho
                     </button>
                 </div>
@@ -160,10 +180,10 @@
                     <p class="text-gray-600 mb-4">A peça essencial para noites frias.</p>
                     <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
                     <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
-                        data-id="caneca-ceramica" 
-                        data-name="Caneca de Cerâmica" 
-                        data-price="19.99"
-                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">
+                        data-id="cobertor-aconchegante" 
+                        data-name="Cobertor Aconchegante" 
+                        data-price="79.99"
+                        data-image="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor">
                         Adicionar ao Carrinho
                     </button>
                 </div>
@@ -173,7 +193,7 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Cantinho do Outono. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -181,7 +201,7 @@
     <script>
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
-        const appearOptions = { threshold: 0.5 };
+        const appearOptions = { threshold: 0.25 };
         const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) {
@@ -195,6 +215,20 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
+        });
+
+        // Adiciona funcionalidade aos botões de adicionar ao carrinho
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    id: button.dataset.id,
+                    name: button.dataset.name,
+                    price: parseFloat(button.dataset.price),
+                    image: button.dataset.image
+                };
+                addToCart(product);
+                alert(`${product.name} foi adicionado ao carrinho!`);
+            });
         });
     </script>
 </body>
