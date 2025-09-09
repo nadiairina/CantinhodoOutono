@@ -13,6 +13,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
+            color: #4A2B1A;
         }
 
         /* Classes de transição e hover para os botões */
@@ -84,38 +85,38 @@
         .hidden {
             display: none;
         }
-
-        /* Media query para tornar o header responsivo */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <header class="bg-white shadow-sm py-4">
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
                 <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
             </a>
-            <nav class="flex items-center space-x-6"> 
-                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300"">Início</a>
+            <nav class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
                 <a href="produtos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Produtos</a>
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="carrinho.html" id="cart-icon" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <button id="cart-btn" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                    </a>
+                    </button>
                     <span id="cart-item-count" class="cart-item-count">0</span>
                     <div id="cart-preview" class="hidden">
-                        <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
-                        <div class="flex justify-center mt-4">
-                            <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
+                        <h4 class="text-lg font-bold mb-4">Pré-visualização do Carrinho</h4>
+                        <div id="cart-preview-items">
+                            </div>
+                        <div id="cart-preview-footer" class="mt-4 border-t pt-4">
+                            <div class="flex justify-between items-center font-bold">
+                                <span>Total:</span>
+                                <span id="cart-preview-total">€0.00</span>
+                            </div>
+                            <a href="carrinho.html" class="block text-center btn-primary text-white font-bold py-2 px-4 rounded-full mt-4">Ver Carrinho</a>
                         </div>
                     </div>
                 </div>
@@ -123,136 +124,84 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
-        <section class="max-w-6xl mx-auto">
-            <h1 class="text-5xl font-extrabold text-[#8B4513] text-center mb-4 fade-in">Nossa Coleção de Outono</h1>
-            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto fade-in">
-                Explore a nossa seleção de produtos artesanais e de alta qualidade, perfeitos para tornar a sua casa mais acolhedora nesta estação.
-            </p>
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-center text-[#8B4513] mb-6 fade-in">Nossos Produtos</h1>
+        <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto fade-in">
+            Explore a nossa coleção exclusiva de produtos artesanais. Cada peça é criada com paixão para trazer o calor e o conforto do outono para a sua casa.
+        </p>
 
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 fade-in">
-                <div class="mb-4 md:mb-0">
-                    <label for="sort" class="text-gray-700">Ordenar por:</label>
-                    <select id="sort" class="ml-2 border rounded-md p-2 focus:ring focus:ring-[#8B4513] focus:ring-opacity-50">
-                        <option value="relevance">Relevância</option>
-                        <option value="price-asc">Preço: Baixo para Alto</option>
-                        <option value="price-desc">Preço: Alto para Baixo</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="category" class="text-gray-700">Filtrar por Categoria:</label>
-                    <select id="category" class="ml-2 border rounded-md p-2 focus:ring focus:ring-[#8B4513] focus:ring-opacity-50">
-                        <option value="all">Todas as Categorias</option>
-                        <option value="canecas">Canecas</option>
-                        <option value="velas">Velas</option>
-                        <option value="deco">Decoração</option>
-                        <option value="textil">Têxtil</option>
-                    </select>
-                </div>
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 space-y-4 md:space-y-0 fade-in">
+            <div class="flex items-center space-x-4">
+                <label for="category" class="font-semibold">Categoria:</label>
+                <select id="category" class="rounded-md border-gray-300 shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50">
+                    <option value="all">Todas</option>
+                    <option value="decoracoes">Decorações</option>
+                    <option value="utilidades">Utilidades</option>
+                    <option value="textil">Têxteis</option>
+                </select>
             </div>
 
-            <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="canecas">
-                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca artesanal de cerâmica com design de folha de outono" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Caneca de Cerâmica</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 19,99</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="caneca-ceramica" data-name="Caneca de Cerâmica" data-price="19.99" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="velas">
-                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Vela" alt="Vela aromática com fragrância de canela e baunilha" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Vela Aromática</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 15,50</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="vela-aromatica" data-name="Vela Aromática" data-price="15.50" data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Vela">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="textil">
-                    <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="cobertor-aconchegante" data-name="Cobertor Aconchegante" data-price="79.99" data-image="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="textil">
-                    <img src="https://placehold.co/400x400/F4A460/ffffff?text=Almofada" alt="Almofada decorativa com padrão de outono" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Almofada Decorativa</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 25,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="almofada-decorativa" data-name="Almofada Decorativa" data-price="25.00" data-image="https://placehold.co/400x400/F4A460/ffffff?text=Almofada">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="velas">
-                    <img src="https://placehold.co/400x400/CD853F/ffffff?text=Porta-Velas" alt="Conjunto de 3 porta-velas de madeira" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Conjunto de Porta-Velas</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 35,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="conjunto-porta-velas" data-name="Conjunto de Porta-Velas" data-price="35.00" data-image="https://placehold.co/400x400/CD853F/ffffff?text=Porta-Velas">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="deco">
-                    <img src="https://placehold.co/400x400/8B4513/ffffff?text=Decoracao" alt="Decoração de parede com raminhos e folhas secas" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Decoração de Parede</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 45,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="decoracao-parede" data-name="Decoração de Parede" data-price="45.00" data-image="https://placehold.co/400x400/8B4513/ffffff?text=Decoracao">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="canecas">
-                    <img src="https://placehold.co/400x400/B8860B/ffffff?text=Chá" alt="Conjunto de chá de cerâmica com bule e duas chávenas" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Conjunto de Chá</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 55,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="conjunto-cha" data-name="Conjunto de Chá" data-price="55.00" data-image="https://placehold.co/400x400/B8860B/ffffff?text=Chá">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="deco">
-                    <img src="https://placehold.co/400x400/6B8E23/ffffff?text=Porta-chaves" alt="Porta-chaves em forma de folha de carvalho" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Porta-chaves de Folha</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 9,99</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="porta-chaves-folha" data-name="Porta-chaves de Folha" data-price="9.99" data-image="https://placehold.co/400x400/6B8E23/ffffff?text=Porta-chaves">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="deco">
-                    <img src="https://placehold.co/400x400/FF7F50/ffffff?text=Abobora" alt=" abóbora com canela" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Abóbora</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 12,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="compota-abobora" data-name="Compota de Abóbora" data-price="12.00" data-image="https://placehold.co/400x400/FF7F50/ffffff?text=Compota">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="deco">
-                    <img src="https://placehold.co/400x400/DDA0DD/ffffff?text=Saco" alt="Saco de pano reutilizável com motivo de folhas" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Saco Reutilizável</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 8,50</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="saco-reutilizavel" data-name="Saco Reutilizável" data-price="8.50" data-image="https://placehold.co/400x400/DDA0DD/ffffff?text=Saco">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="velas">
-                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Aromatizador" alt="Aromatizador de ambiente em spray" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Aromatizador de Ambiente</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 18,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="aromatizador-ambiente" data-name="Aromatizador de Ambiente" data-price="18.00" data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Aromatizador">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in" data-category="deco">
-                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda" alt="Guirlanda de outono com pinhas e folhas" class="w-full rounded-lg mb-4">
-                    <h2 class="text-xl font-semibold mb-2">Guirlanda de Outono</h2>
-                    <span class="text-2xl font-bold text-[#8B4513]">€ 65,00</span>
-                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" data-id="guirlanda-outono" data-name="Guirlanda de Outono" data-price="65.00" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda">
-                        Adicionar ao Carrinho
-                    </button>
-                </div>
+            <div class="flex items-center space-x-4">
+                <label for="sort" class="font-semibold">Ordenar por:</label>
+                <select id="sort" class="rounded-md border-gray-300 shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50">
+                    <option value="relevance">Relevância</option>
+                    <option value="price-asc">Preço (baixo para alto)</option>
+                    <option value="price-desc">Preço (alto para baixo)</option>
+                </select>
             </div>
+        </div>
+
+        <section id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center fade-in" data-category="utilidades" data-relevance-order="1" data-id="caneca-ceramica" data-name="Caneca de Cerâmica" data-price="15.00" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca">
+                <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Caneca" alt="Caneca de cerâmica artesanal com design de folha de outono" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">Caneca de Cerâmica</h3>
+                <p class="text-gray-600 mb-4">Perfeita para o seu chá ou café matinal.</p>
+                <span class="text-2xl font-bold text-[#8B4513]">€ 15,00</span>
+                <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center fade-in" data-category="decoracoes" data-relevance-order="2" data-id="vela-aromatica" data-name="Vela Aromática" data-price="22.50" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Vela">
+                <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Vela" alt="Vela aromática com aroma de canela e especiarias de outono" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">Vela Aromática</h3>
+                <p class="text-gray-600 mb-4">O aroma de canela e especiarias para um ambiente acolhedor.</p>
+                <span class="text-2xl font-bold text-[#8B4513]">€ 22,50</span>
+                <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+            
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center fade-in" data-category="textil" data-relevance-order="3" data-id="cobertor-aconchegante" data-name="Cobertor Aconchegante" data-price="79.99" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Cobertor">
+                <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h3>
+                <p class="text-gray-600 mb-4">A peça essencial para noites frias.</p>
+                <span class="text-2xl font-bold text-[#8B4513]">€ 79,99</span>
+                <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center fade-in" data-category="decoracoes" data-id="almofada-decorativa" data-name="Almofada Decorativa" data-price="35.00" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada">
+                <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Almofada" alt="Almofada decorativa de outono" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">Almofada Decorativa</h3>
+                <p class="text-gray-600 mb-4">Adicione um toque de cor e conforto ao seu sofá.</p>
+                <span class="text-2xl font-bold text-[#8B4513]">€ 35,00</span>
+                <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center fade-in" data-category="decoracoes" data-id="guirlanda-outono" data-name="Guirlanda de Outono" data-price="65.00" data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda">
+                <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda" alt="Guirlanda de outono para a porta de entrada" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">Guirlanda de Outono</h3>
+                <p class="text-gray-600 mb-4">Dê as boas-vindas à estação com estilo.</p>
+                <span class="text-2xl font-bold text-[#8B4513]">€ 65,00</span>
+                <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4">
+                    Adicionar ao Carrinho
+                </button>
+            </div>
+            
         </section>
     </main>
 
@@ -264,23 +213,6 @@
     
     <script src="script.js"></script>
     <script>
-        // Lógica de pré-visualização do carrinho
-        document.addEventListener('DOMContentLoaded', () => {
-            const cartBtn = document.getElementById('cart-btn');
-            const cartPreview = document.getElementById('cart-preview');
-
-            cartBtn.addEventListener('click', () => {
-                cartPreview.classList.toggle('hidden');
-            });
-
-            // Fechar o pop-up se clicar fora
-            document.addEventListener('click', (e) => {
-                if (!cartBtn.contains(e.target) && !cartPreview.contains(e.target)) {
-                    cartPreview.classList.add('hidden');
-                }
-            });
-        });
-
         // Animações de scroll
         const faders = document.querySelectorAll('.fade-in');
         const appearOptions = { threshold: 0.25 };
@@ -297,21 +229,6 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
-        });
-
-        // Adicionar filtros aos produtos
-        document.getElementById('category').addEventListener('change', (e) => {
-            const selectedCategory = e.target.value;
-            const products = document.querySelectorAll('.product-card');
-
-            products.forEach(product => {
-                const productCategory = product.getAttribute('data-category');
-                if (selectedCategory === 'all' || productCategory === selectedCategory) {
-                    product.classList.remove('hidden');
-                } else {
-                    product.classList.add('hidden');
-                }
-            });
         });
     </script>
 </body>
