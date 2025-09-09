@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós | Cantinho de Outono</title>
+    <title>Sobre Nós | Cantinho do Outono</title>
     <meta name="description" content="Saiba mais sobre a história da Cantinho de Outono, a nossa missão de oferecer produtos de decoração aconchegantes e o nosso compromisso com a sustentabilidade.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #fef9f5;
+            color: #4A2B1A;
         }
         .btn-primary {
             background-color: #8B4513;
@@ -23,7 +24,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        /* Animações de scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -65,13 +65,12 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-[#fef9f5]">
 
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-[#8B4513] rounded-full mr-2"></div>
-                <span class="text-3xl font-bold text-[#8B4513]">Cantinho do Outono</span>
+                <span class="text-3xl font-bold text-[#8B4513]">Cantinho de Outono</span>
             </a>
             <nav class="flex items-center space-x-6">
                 <a href="index.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Início</a>
@@ -79,13 +78,13 @@
                 <a href="sobre-nos.html" class="text-[#8B4513] font-semibold hover:text-[#A0522D] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="#" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <a href="carrinho.html" id="cart-icon" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
-                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
+                    <div id="cart-preview" class="hidden">
                         <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
                         <div class="flex justify-center mt-4">
                             <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
@@ -97,28 +96,37 @@
     </header>
 
     <main class="container mx-auto px-4 py-8">
-        <section class="max-w-4xl mx-auto text-center bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-            <h1 class="text-5xl font-extrabold text-[#8B4513] mb-6 fade-in">Nossa História</h1>
-            <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto fade-in">
-                Na Mermaid, acreditamos que a sua casa deve ser um santuário.
-            </p>
-
-            <div class="grid md:grid-cols-2 gap-12 text-left items-center">
+        <section class="max-w-6xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-[#8B4513] mb-6">A Nossa História</h1>
+                    <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                        No <strong class="font-semibold">Cantinho de Outono</strong>, acreditamos que cada detalhe transforma uma casa num lar. Nascemos da paixão pelas cores quentes, aromas acolhedores e a sensação de conforto que o outono nos traz. Dedicamo-nos a criar e selecionar produtos artesanais que capturam a essência desta estação mágica.
+                    </p>
+                    <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                        Desde velas perfumadas que enchem o ar com notas de canela e abóbora, a mantas macias que convidam ao aconchego, e canecas únicas para o seu chá favorito – cada item é cuidadosamente pensado para trazer calor e bem-estar ao seu dia a dia.
+                    </p>
+                </div>
                 <div class="fade-in">
                     <img src="https://placehold.co/600x400/DDA0DD/ffffff?text=Artesanato" alt="Detalhe de um produto artesanal" class="rounded-xl shadow-lg transform transition-transform duration-300 hover:scale-105">
                 </div>
-                <div class="fade-in">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">A Nossa Missão</h2>
-                    <p class="text-gray-600 mb-4">
-                        A nossa missão é trazer o aconchego e a beleza do outono para a sua vida, através de produtos artesanais, de alta qualidade e com um toque de magia. Cada peça é cuidadosamente selecionada para garantir que a sua casa se sinta mais quente e acolhedora.
-                    </p>
-                </div>
-                
-                <div class="md:col-span-2 text-center my-10 fade-in">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Compromisso com a Sustentabilidade</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Na Mermaid, a sustentabilidade é um valor fundamental. Procuramos utilizar materiais reciclados e de origem sustentável sempre que possível. Acreditamos que é possível criar produtos bonitos e de qualidade sem comprometer o nosso planeta.
-                    </p>
+            </div>
+
+            <div class="mt-20 text-center">
+                <h2 class="text-4xl font-bold mb-6 text-[#8B4513] fade-in">Os Nossos Valores</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 fade-in">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#8B4513]">Paixão</h3>
+                        <p class="text-gray-700">Fazemos cada produto com amor e atenção aos detalhes, para que sinta o nosso carinho.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 fade-in">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#8B4513]">Qualidade</h3>
+                        <p class="text-gray-700">Utilizamos apenas os melhores materiais para criar produtos duradouros e de excelência.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 fade-in">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#8B4513]">Aconchego</h3>
+                        <p class="text-gray-700">O nosso objetivo é que cada peça transforme o seu espaço num refúgio acolhedor.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -126,7 +134,7 @@
 
     <footer class="bg-[#8B4513] text-white py-8 mt-12">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 Cantinho do Outono. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Cantinho de Outono. Todos os direitos reservados.</p>
         </div>
     </footer>
 
