@@ -230,7 +230,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderCart();
 
-            // Lógica para mostrar/esconder detalhes de pagamento
             const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
             const detailsContainers = {
                 card: document.getElementById('card-details'),
@@ -252,7 +251,6 @@
             });
         });
 
-        // Lógica de simulação do pagamento
         const checkoutForm = document.getElementById('checkout-form');
         const checkoutContent = document.getElementById('checkout-content');
         const successMessage = document.getElementById('success-message');
