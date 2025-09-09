@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cartPreview.classList.remove('hidden');
         });
         cartIconLink.addEventListener('mouseleave', (e) => {
-            // Verificar se o mouse saiu para o pop-up
             if (!cartPreview.contains(e.relatedTarget)) {
                  cartPreview.classList.add('hidden');
             }
