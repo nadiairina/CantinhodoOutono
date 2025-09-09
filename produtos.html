@@ -55,6 +55,20 @@
             font-weight: bold;
             line-height: 1;
         }
+        #cart-preview {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 1rem;
+            z-index: 50;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -71,12 +85,18 @@
                 <a href="sobre-nos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Sobre Nós</a>
                 <a href="contactos.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">Contactos</a>
                 <div class="cart-icon-container">
-                    <a href="carrinho.html" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
+                    <a href="#" class="text-gray-600 hover:text-[#8B4513] transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.18 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </a>
                     <span id="cart-item-count" class="cart-item-count">0</span>
+                    <div id="cart-preview" class="hidden absolute top-10 right-0 mt-2 w-80 bg-white rounded-md shadow-lg p-4">
+                        <div id="cart-preview-items" class="max-h-60 overflow-y-auto"></div>
+                        <div class="flex justify-center mt-4">
+                            <a href="carrinho.html" class="btn-primary text-white font-bold py-2 px-6 rounded-full w-full text-center">Ver Carrinho Completo</a>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -101,7 +121,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-                
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Vela" alt="Vela aromática com fragrância de canela e baunilha" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Vela Aromática</h2>
@@ -114,7 +133,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-                
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/A0522D/ffffff?text=Cobertor" alt="Cobertor macio de lã em cor castanha" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Cobertor Aconchegante</h2>
@@ -140,7 +158,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/CD853F/ffffff?text=Porta-Velas" alt="Conjunto de 3 porta-velas de madeira" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Conjunto de Porta-Velas</h2>
@@ -153,7 +170,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/8B4513/ffffff?text=Decoracao" alt="Decoração de parede com raminhos e folhas secas" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Decoração de Parede</h2>
@@ -179,7 +195,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-                
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/6B8E23/ffffff?text=Porta-chaves" alt="Porta-chaves em forma de folha de carvalho" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Porta-chaves de Folha</h2>
@@ -192,7 +207,6 @@
                         Adicionar ao Carrinho
                     </button>
                 </div>
-                
                 <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
                     <img src="https://placehold.co/400x400/FF7F50/ffffff?text=Compota" alt="Pote de compota de abóbora com canela" class="w-full rounded-lg mb-4">
                     <h2 class="text-xl font-semibold mb-2">Compota de Abóbora</h2>
@@ -202,6 +216,43 @@
                         data-name="Compota de Abóbora" 
                         data-price="12.00" 
                         data-image="https://placehold.co/400x400/FF7F50/ffffff?text=Compota">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/DDA0DD/ffffff?text=Saco" alt="Saco de pano reutilizável com motivo de folhas" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Saco Reutilizável</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 8,50</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="saco-reutilizavel" 
+                        data-name="Saco Reutilizável" 
+                        data-price="8.50" 
+                        data-image="https://placehold.co/400x400/DDA0DD/ffffff?text=Saco">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/BDB76B/ffffff?text=Aromatizador" alt="Aromatizador de ambiente em spray" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Aromatizador de Ambiente</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 18,00</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="aromatizador-ambiente" 
+                        data-name="Aromatizador de Ambiente" 
+                        data-price="18.00" 
+                        data-image="https://placehold.co/400x400/BDB76B/ffffff?text=Aromatizador">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center product-card fade-in">
+                    <img src="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda" alt="Guirlanda de outono com pinhas e folhas" class="w-full rounded-lg mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Guirlanda de Outono</h2>
+                    <span class="text-2xl font-bold text-[#8B4513]">€ 65,00</span>
+                    <button class="add-to-cart-btn btn-primary text-white font-bold py-2 px-6 rounded-full mt-4" 
+                        data-id="guirlanda-outono" 
+                        data-name="Guirlanda de Outono" 
+                        data-price="65.00" 
+                        data-image="https://placehold.co/400x400/D2B48C/ffffff?text=Guirlanda">
                         Adicionar ao Carrinho
                     </button>
                 </div>
