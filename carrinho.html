@@ -237,8 +237,7 @@
             document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
         }
 
-        // NOVO CÓDIGO A PARTIR DAQUI
-        const stripe = Stripe('your-stripe-public-key'); // <--- Substitua pela sua chave pública
+        const stripe = Stripe('pk_test_51S2uHiQeDrS4eWd37UExS3JrVEGEiKKf0D56ahzsTK0ro1VMCm5SuQl8bxpWTaZK2HkExrF5bcV68ERQjXIpYjot00zQnDtAtQ'); // Sua chave pública
         const checkoutButton = document.getElementById('checkout-button');
         const paymentElementContainer = document.getElementById('payment-element-container');
         const paymentMessage = document.getElementById('payment-message');
