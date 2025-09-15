@@ -35,9 +35,9 @@ exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
 
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
     const sig = req.headers['stripe-signature'];
-    
+
     let event;
-    
+
     try {
         event = stripe.webhooks.constructEvent(req.rawBody, sig, functions.config().stripe.webhook_secret);
     } catch (err) {
