@@ -176,7 +176,7 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        const SHIPPING_COST = 2.50; // Custo de envio fixo
+        const SHIPPING_COST = 2.50;
 
         // Funções para renderizar o carrinho
         function renderCart() {
@@ -271,6 +271,11 @@
         // Código de checkout do Stripe
         const checkoutButton = document.getElementById('checkout-button');
         checkoutButton.addEventListener('click', async () => {
+            // Desativar o botão para evitar cliques duplos
+            checkoutButton.disabled = true;
+            checkoutButton.classList.add('opacity-50', 'cursor-not-allowed');
+            checkoutButton.textContent = 'A Processar...';
+
             const cart = getCart();
             const itemsForCheckout = cart.map(item => ({
                 id: item.id,
@@ -280,27 +285,41 @@
             }));
 
             try {
-                // Chamar a sua função do Firebase para criar o Payment Intent
                 const createPaymentIntent = firebase.functions().httpsCallable('createPaymentIntent');
                 const result = await createPaymentIntent({ items: itemsForCheckout });
                 const clientSecret = result.data.clientSecret;
 
-                // Confirmar o pagamento com o Stripe
-                const stripe = Stripe('SUA_CHAVE_PÚBLICA_DO_STRIPE'); // Substitua pela sua chave pública
+                const stripe = Stripe('SUA_CHAVE_PÚBLICA_DO_STRIPE');
                 const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret);
 
                 if (error) {
                     console.error('Erro no pagamento:', error.message);
                     alert(`Ocorreu um erro: ${error.message}`);
+                    // Reativar o botão em caso de erro
+                    checkoutButton.disabled = false;
+                    checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                    checkoutButton.textContent = 'Finalizar Compra';
                 } else {
-                    alert('Pagamento bem-sucedido!');
-                    // Limpar o carrinho e redirecionar
-                    saveCart([]); // Limpa o carrinho no localStorage
-                    window.location.href = 'produtos.html'; // Redireciona para a página de produtos
+                    if (paymentIntent.status === 'succeeded') {
+                        alert('Pagamento bem-sucedido!');
+                        // Limpar o carrinho e redirecionar
+                        saveCart([]);
+                        window.location.href = 'produtos.html';
+                    } else {
+                        alert(`O pagamento não foi bem-sucedido: ${paymentIntent.status}`);
+                        // Reativar o botão se o status não for 'succeeded'
+                        checkoutButton.disabled = false;
+                        checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                        checkoutButton.textContent = 'Finalizar Compra';
+                    }
                 }
             } catch (error) {
                 console.error('Erro na chamada da função do Firebase:', error);
                 alert('Não foi possível processar o pagamento. Tente novamente mais tarde.');
+                // Reativar o botão em caso de erro da função
+                checkoutButton.disabled = false;
+                checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                checkoutButton.textContent = 'Finalizar Compra';
             }
         });
     </script>
