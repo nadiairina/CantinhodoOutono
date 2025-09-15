@@ -1,57 +1,38 @@
 const functions = require("firebase-functions");
 const stripe = require("stripe")(functions.config().stripe.secret);
 
+// Função para criar uma intenção de pagamento no Stripe
 exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
-    console.log("Recebendo pedido para criar PaymentIntent");
+  try {
+    const items = data.items;
 
-    const { items } = data;
-
-    if (!items || !Array.isArray(items) || items.length === 0) {
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            "'items' array is required."
-        );
+    if (!items || items.length === 0) {
+      throw new functions.https.HttpsError('invalid-argument', 'O carrinho está vazio.');
     }
 
-    try {
-        const totalAmount = items.reduce((total, item) => total + (item.price * item.quantity), 0);
-        const amountInCents = Math.round(totalAmount * 100);
+    // Calcular o valor total com base nos itens e no envio
+    const SHIPPING_COST = 2.50; // Custo de envio fixo em Euros
+    const totalAmount = items.reduce((total, item) => {
+      // Usar a lógica do lado do servidor para calcular o preço
+      // Nota: Em um ambiente real, você buscaria o preço do produto em um banco de dados
+      // para evitar que o cliente manipule o valor.
+      return total + (item.price * item.quantity);
+    }, 0);
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: amountInCents,
-            currency: 'eur',
-            metadata: { integration_check: 'accept_a_payment' },
-        });
+    const finalAmount = totalAmount + SHIPPING_COST;
 
-        return { clientSecret: paymentIntent.client_secret };
-    } catch (error) {
-        console.error("Error creating Payment Intent:", error);
-        throw new functions.https.HttpsError(
-            'internal',
-            error.message
-        );
-    }
-});
+    // Criar a intenção de pagamento com o Stripe
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(finalAmount * 100), // O Stripe espera o valor em cêntimos
+      currency: "eur", // Euro
+    });
 
-exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
-    const sig = req.headers['stripe-signature'];
-
-    let event;
-
-    try {
-        event = stripe.webhooks.constructEvent(req.rawBody, sig, functions.config().stripe.webhook_secret);
-    } catch (err) {
-        return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log(`Pagamento bem-sucedido: ${paymentIntent.id}`);
-            break;
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-    }
-
-    res.json({ received: true });
+    // Retornar a chave secreta de cliente para o frontend
+    return {
+      clientSecret: paymentIntent.client_secret,
+    };
+  } catch (error) {
+    console.error("Erro ao criar o Payment Intent:", error);
+    throw new functions.https.HttpsError('unknown', 'Não foi possível criar o Payment Intent.', error.message);
+  }
 });
