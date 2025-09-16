@@ -4,7 +4,9 @@ const stripe = require("stripe")(functions.config().stripe.secret);
 // Função para criar uma intenção de pagamento no Stripe
 exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
     try {
-        const { items } = data; // Espaços removidos aqui
+        // CORREÇÃO: Espaços removidos aqui, por exemplo: const { items } = data;
+        // As variáveis 'onRequest' e 'logger' já foram removidas
+        const {items} = data;
 
         if (!items || items.length === 0) {
             throw new functions.https.HttpsError('invalid-argument', 'O carrinho está vazio.');
@@ -18,7 +20,7 @@ exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
 
         const finalAmount = totalAmount + SHIPPING_COST;
 
-        // Criar a intenção de pagamento com o Stripe
+        // CORREÇÃO: A chave usada para o Stripe é a 'secret', não a 'key'
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(finalAmount * 100),
             currency: "eur",
