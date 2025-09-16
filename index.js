@@ -4,8 +4,6 @@ const stripe = require("stripe")(functions.config().stripe.secret);
 // Função para criar uma intenção de pagamento no Stripe
 exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
     try {
-        // CORREÇÃO: Espaços removidos aqui, por exemplo: const { items } = data;
-        // As variáveis 'onRequest' e 'logger' já foram removidas
         const {items} = data;
 
         if (!items || items.length === 0) {
@@ -20,7 +18,7 @@ exports.createPaymentIntent = functions.https.onCall(async (data, context) => {
 
         const finalAmount = totalAmount + SHIPPING_COST;
 
-        // CORREÇÃO: A chave usada para o Stripe é a 'secret', não a 'key'
+        // Criar a intenção de pagamento com o Stripe
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(finalAmount * 100),
             currency: "eur",
