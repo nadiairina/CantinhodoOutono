@@ -1,3 +1,23 @@
+// O seu projeto Firebase - Substitua por suas informações
+// Pode encontrar estas informações na consola do Firebase
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "cantinho-outono-ecommerce",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+};
+
+// Inicialize o Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Inicialize as Cloud Functions e o Stripe
+const functions = firebase.functions();
+const stripe = Stripe("SUA_CHAVE_PUBLICA_AQUI"); // Substitua pela sua chave pk_test_...
+
+const SHIPPING_COST = 5.00;
+
 // Funções de Gestão do Carrinho (usando localStorage)
 function getCart() {
     const cart = localStorage.getItem('cart');
@@ -7,7 +27,8 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    renderCartPreview(); // Atualiza a pré-visualização ao salvar
+    renderCart();
+    updateTotals();
 }
 
 function updateCartCount() {
@@ -19,17 +40,17 @@ function updateCartCount() {
     }
 }
 
-function addToCart(product) {
+function updateQuantity(productId, change) {
     const cart = getCart();
-    const existingProductIndex = cart.findIndex(item => item.id === product.id);
-
-    if (existingProductIndex > -1) {
-        cart[existingProductIndex].quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
+    const product = cart.find(item => item.id === productId);
+    if (product) {
+        product.quantity += change;
+        if (product.quantity <= 0) {
+            removeFromCart(productId);
+        } else {
+            saveCart(cart);
+        }
     }
-
-    saveCart(cart);
 }
 
 function removeFromCart(productId) {
@@ -38,166 +59,158 @@ function removeFromCart(productId) {
     saveCart(updatedCart);
 }
 
-// Animação "fly to cart"
-function flyToCartAnimation(imageElement) {
-    const cartIcon = document.querySelector('.cart-icon-container a');
-    const imageRect = imageElement.getBoundingClientRect();
-    const cartRect = cartIcon.getBoundingClientRect();
-
-    const flyingImage = imageElement.cloneNode(true);
-    flyingImage.style.position = 'fixed';
-    flyingImage.style.top = `${imageRect.top}px`;
-    flyingImage.style.left = `${imageRect.left}px`;
-    flyingImage.style.width = `${imageRect.width}px`;
-    flyingImage.style.height = `${imageRect.height}px`;
-    flyingImage.style.opacity = '1';
-    flyingImage.style.transition = 'all 1s ease-in-out';
-    flyingImage.style.zIndex = '1000';
-    flyingImage.style.borderRadius = '9999px';
-
-    document.body.appendChild(flyingImage);
-
-    flyingImage.getBoundingClientRect();
-    
-    flyingImage.style.top = `${cartRect.top}px`;
-    flyingImage.style.left = `${cartRect.left}px`;
-    flyingImage.style.width = '30px';
-    flyingImage.style.height = '30px';
-    flyingImage.style.opacity = '0.5';
-
-    setTimeout(() => {
-        flyingImage.remove();
-    }, 1000);
-}
-
-// Pré-visualização do carrinho
-function renderCartPreview() {
-    const cartPreviewContainer = document.getElementById('cart-preview-items');
-    if (!cartPreviewContainer) return;
-
+function renderCart() {
     const cart = getCart();
-    cartPreviewContainer.innerHTML = '';
-    let total = 0;
+    const cartItemsContainer = document.getElementById('cart-items');
+    const emptyCartMessage = document.getElementById('empty-cart-message');
+    const checkoutButton = document.getElementById('checkout-button');
+
+    cartItemsContainer.innerHTML = '';
 
     if (cart.length === 0) {
-        cartPreviewContainer.innerHTML = `<p class="text-gray-500 text-center text-sm">O carrinho está vazio.</p>`;
+        emptyCartMessage.classList.remove('hidden');
+        document.getElementById('checkout-content').classList.add('hidden');
+        return;
     } else {
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-            const itemHTML = `
-                <div class="flex items-center mb-2">
-                    <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-md mr-2">
-                    <div class="flex-grow">
-                        <p class="text-sm font-medium">${item.name}</p>
-                        <p class="text-xs text-gray-500">Qtd: ${item.quantity} | €${(item.price * item.quantity).toFixed(2)}</p>
+        emptyCartMessage.classList.add('hidden');
+        document.getElementById('checkout-content').classList.remove('hidden');
+    }
+
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('flex', 'items-center', 'justify-between', 'border-b', 'border-gray-200', 'py-4');
+        itemElement.innerHTML = `
+            <div class="flex items-center">
+                <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                <div>
+                    <h3 class="font-semibold text-lg">${item.name}</h3>
+                    <p class="text-sm text-gray-600">Preço: €${item.price.toFixed(2)}</p>
+                    <div class="flex items-center mt-2">
+                        <button class="quantity-btn decrease-btn bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center" data-id="${item.id}">-</button>
+                        <span class="mx-3">${item.quantity}</span>
+                        <button class="quantity-btn increase-btn bg-gray-200 text-gray-700 rounded-full w-6 h-6 flex items-center justify-center" data-id="${item.id}">+</button>
                     </div>
-                </div>
-            `;
-            cartPreviewContainer.innerHTML += itemHTML;
-        });
-        const totalHTML = `
-            <div class="border-t pt-2 mt-2">
-                <div class="flex justify-between font-bold">
-                    <span>Total:</span>
-                    <span>€${total.toFixed(2)}</span>
                 </div>
             </div>
+            <div class="flex items-center space-x-4">
+                <span class="font-bold text-[#8B4513] text-lg">€${(item.price * item.quantity).toFixed(2)}</span>
+                <button class="remove-from-cart-btn text-red-500 hover:text-red-700" data-id="${item.id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+            </div>
         `;
-        cartPreviewContainer.innerHTML += totalHTML;
-    }
+        cartItemsContainer.appendChild(itemElement);
+    });
+
+    document.querySelectorAll('.increase-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            updateQuantity(id, 1);
+        });
+    });
+
+    document.querySelectorAll('.decrease-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            updateQuantity(id, -1);
+        });
+    });
+
+    document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = e.target.closest('button').dataset.id;
+            removeFromCart(id);
+        });
+    });
 }
 
+function updateTotals() {
+    const cart = getCart();
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const total = subtotal + SHIPPING_COST;
+    
+    document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
+    document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
+}
 
+// Lógica de Pagamento
 document.addEventListener('DOMContentLoaded', () => {
-    updateCartCount();
-    renderCartPreview();
+    renderCart();
+    updateTotals();
 
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-    if (addToCartButtons.length > 0) {
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const productCard = button.closest('.product-card');
-                const productImage = productCard.querySelector('img');
+    const checkoutForm = document.getElementById('checkout-form');
+    const checkoutContent = document.getElementById('checkout-content');
+    const successMessage = document.getElementById('success-message');
 
-                if (productImage) {
-                    flyToCartAnimation(productImage);
+    // Substituímos a lógica simulada por uma chamada real
+    checkoutForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const cart = getCart();
+        const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const totalAmount = (subtotal + SHIPPING_COST) * 100; // Multiplicamos por 100 para o Stripe (ex: 10€ = 1000 cêntimos)
+
+        try {
+            // Chamar a Cloud Function para criar o PaymentIntent
+            const createPaymentIntent = functions.httpsCallable('createPaymentIntent');
+            const response = await createPaymentIntent({ amount: totalAmount, currency: 'eur' });
+            const clientSecret = response.data.clientSecret;
+            
+            // Confirmar o pagamento no lado do cliente
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: {
+                        // Não é seguro. Apenas para simulação. Na vida real, use elementos Stripe.
+                        // Este código deve ser substituído por algo como:
+                        // card: cardElement
+                    },
                 }
-
-                const product = {
-                    id: button.dataset.id,
-                    name: button.dataset.name,
-                    price: parseFloat(button.dataset.price),
-                    image: button.dataset.image
-                };
-                addToCart(product);
             });
-        });
-    }
 
-    if (document.getElementById('cart-items')) {
-        renderCart();
-    }
+            if (result.error) {
+                // Erro no pagamento
+                alert(result.error.message);
+            } else {
+                // Pagamento bem-sucedido
+                if (result.paymentIntent.status === 'succeeded') {
+                    checkoutContent.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
 
-    const cartIconLink = document.querySelector('.cart-icon-container a');
-    const cartPreview = document.getElementById('cart-preview');
-    if (cartIconLink && cartPreview) {
-        // Mostra/esconde a pré-visualização ao clicar no ícone do carrinho
-        cartIconLink.addEventListener('click', (e) => {
-            e.preventDefault(); // Impede a navegação
-            renderCartPreview();
-            cartPreview.classList.toggle('hidden');
-        });
+                    localStorage.removeItem('cart');
+                    updateCartCount();
+                }
+            }
 
-        // Esconde a pré-visualização ao clicar em qualquer lugar fora dela
-        document.addEventListener('click', (e) => {
-            if (!cartPreview.contains(e.target) && !cartIconLink.contains(e.target)) {
-                cartPreview.classList.add('hidden');
+        } catch (error) {
+            console.error("Erro no checkout:", error);
+            alert("Ocorreu um erro ao processar o seu pagamento. Por favor, tente novamente.");
+        }
+    });
+
+    // Lógica para mostrar/esconder detalhes de pagamento
+    const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
+    const paymentContainers = document.querySelectorAll('.payment-option');
+    const detailsContainers = {
+        card: document.getElementById('card-details'),
+        mbway: document.getElementById('mbway-details'),
+        transfer: document.getElementById('transfer-details')
+    };
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('change', (e) => {
+            const selectedMethod = e.target.id.split('_')[1];
+            paymentContainers.forEach(container => container.classList.remove('selected'));
+            document.querySelector(`[data-payment-option="${selectedMethod}"]`).classList.add('selected');
+
+            for (const method in detailsContainers) {
+                if (method === selectedMethod) {
+                    detailsContainers[method].classList.remove('hidden');
+                } else {
+                    detailsContainers[method].classList.add('hidden');
+                }
             }
         });
-    }
+    });
 });
-
-function renderCart() {
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotalElement = document.getElementById('cart-total');
-    const cart = getCart();
-    
-    cartItemsContainer.innerHTML = '';
-    let total = 0;
-
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center">O seu carrinho está vazio.</p>`;
-    } else {
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-            const itemHTML = `
-                <div class="flex items-center justify-between border-b pb-4 mb-4">
-                    <div class="flex items-center">
-                        <img src="${item.image}" alt="${item.name}" class="rounded-lg w-20 h-20 object-cover mr-4">
-                        <div>
-                            <h3 class="font-semibold">${item.name}</h3>
-                            <p class="text-sm text-gray-500">Quantidade: ${item.quantity}</p>
-                            <span class="font-bold text-[#8B4513]">€${(item.price * item.quantity).toFixed(2)}</span>
-                        </div>
-                    </div>
-                    <button class="remove-from-cart-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors" data-id="${item.id}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
-                </div>
-            `;
-            cartItemsContainer.innerHTML += itemHTML;
-        });
-
-        document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const productId = button.dataset.id;
-                removeFromCart(productId);
-                renderCart();
-            });
-        });
-    }
-
-    cartTotalElement.textContent = `€${total.toFixed(2)}`;
-}
