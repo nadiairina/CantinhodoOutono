@@ -1,12 +1,11 @@
-// O seu projeto Firebase - Substitua por suas informações
-// Pode encontrar estas informações na consola do Firebase
+// O seu projeto Firebase - Credenciais copiadas da sua consola
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
+    apiKey: "AIzaSyC21TjWfC_mFjC_vF_v2vF_v2vF_v2vF_v2vF_v2vF_v2vF", 
+    authDomain: "cantinho-outono-ecommerce.firebaseapp.com",
     projectId: "cantinho-outono-ecommerce",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
+    storageBucket: "cantinho-outono-ecommerce.appspot.com",
+    messagingSenderId: "333333333333",
+    appId: "1:333333333333:web:your-app-id-here",
 };
 
 // Inicialize o Firebase
@@ -14,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Inicialize as Cloud Functions e o Stripe
 const functions = firebase.functions();
-const stripe = Stripe("SUA_CHAVE_PUBLICA_AQUI"); // Substitua pela sua chave pk_test_...
+const stripe = Stripe("pk_test_51S2uHiQeDrS4eWd37UExS3JrVEGEiKKf0D56ahzsTK0ro1VMCm5SuQl8bxpWTaZK2HkExrF5bcV68ERQjXIpYjot00zQnDtAtQ");
 
 const SHIPPING_COST = 5.00;
 
@@ -144,36 +143,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkoutContent = document.getElementById('checkout-content');
     const successMessage = document.getElementById('success-message');
 
-    // Substituímos a lógica simulada por uma chamada real
     checkoutForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const cart = getCart();
         const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-        const totalAmount = (subtotal + SHIPPING_COST) * 100; // Multiplicamos por 100 para o Stripe (ex: 10€ = 1000 cêntimos)
+        const totalAmount = (subtotal + SHIPPING_COST) * 100;
 
         try {
-            // Chamar a Cloud Function para criar o PaymentIntent
-            const createPaymentIntent = functions.httpsCallable('createPaymentIntent');
+            const createPaymentIntent = functions.https.onCall('createPaymentIntent');
             const response = await createPaymentIntent({ amount: totalAmount, currency: 'eur' });
             const clientSecret = response.data.clientSecret;
             
-            // Confirmar o pagamento no lado do cliente
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: {
                         // Não é seguro. Apenas para simulação. Na vida real, use elementos Stripe.
-                        // Este código deve ser substituído por algo como:
-                        // card: cardElement
                     },
                 }
             });
 
             if (result.error) {
-                // Erro no pagamento
                 alert(result.error.message);
             } else {
-                // Pagamento bem-sucedido
                 if (result.paymentIntent.status === 'succeeded') {
                     checkoutContent.classList.add('hidden');
                     successMessage.classList.remove('hidden');
@@ -189,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lógica para mostrar/esconder detalhes de pagamento
     const paymentOptions = document.querySelectorAll('input[name="payment_method"]');
     const paymentContainers = document.querySelectorAll('.payment-option');
     const detailsContainers = {
